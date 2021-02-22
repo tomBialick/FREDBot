@@ -1,0 +1,15 @@
+{
+  "name": "FREDBot",
+  "version": "1.0.0",
+  "description": "Discord bot for Tom & Scrubs that gets FRED Data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tom Bialick",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "node-fetch": "^2.6.1"
+  }
+}
