@@ -21,8 +21,8 @@ bot.on('message', message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'help') {
-    message.channel.send('Here are a list of commands: \n * `!money printer`\n * `!help`\n * `!what`\n * `!get-categories`\n * `!get-subcategories [id]`\n' +
-    +'* `!get-related-categories [id]`\n * `!get-category [id]`');
+    message.channel.send('Here are a list of commands: \n * `!money printer`\n * `!help`\n * `!what`\n * `!get-categories`\n * `!get-subcategories [id]`\n
+    * `!get-related-categories [id]`\n * `!get-category [id]`');
   }
   else if (command === 'moneyprinter') {
     message.channel.send('BRRRRRRR');
