@@ -1,0 +1,20 @@
+{
+  "fred_url":"https://api.stlouisfed.org/fred/",
+  "options": [
+    {"fred/category": "Get a category"},
+    {"fred/category/children": "Get the child categories for a specified parent category"},
+    {"fred/category/related": "Get the related categories for a category"},
+    {"fred/category/series": "Get the series in a category"},
+    {"fred/category/tags": "Get the tags for a category"},
+    {"fred/category/related_tags": "Get the related tags for a category"},
+    {"fred/releases": "Get all releases of economic data"},
+    {"fred/releases/dates": "Get release dates for all releases of economic data"},
+    {"fred/release": "Get a release of economic data"},
+    {"fred/release/dates": "Get release dates for a release of economic data"},
+    {"fred/release/series": "Get the series on a release of economic data"},
+    {"fred/release/sources": "Get the sources for a release of economic data"},
+    {"fred/release/tags": "Get the tags for a release"},
+    {"fred/release/related_tags": "Get the related tags for a release"},
+    {"fred/release/tables": "Get the release tables for a given release"}
+  ]
+}
