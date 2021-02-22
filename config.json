@@ -15,6 +15,22 @@
     {"fred/release/sources": "Get the sources for a release of economic data"},
     {"fred/release/tags": "Get the tags for a release"},
     {"fred/release/related_tags": "Get the related tags for a release"},
-    {"fred/release/tables": "Get the release tables for a given release"}
+    {"fred/release/tables": "Get the release tables for a given release"},
+    {"fred/series": "Get an economic data series"},
+    {"fred/series/categories": "Get the categories for an economic data series"},
+    {"fred/series/observations": "Get the observations or data values for an economic data series"},
+    {"fred/series/release": "Get the release for an economic data series"},
+    {"fred/series/search": "Get economic data series that match keywords"},
+    {"fred/series/search/tags": "Get the tags for a series search"},
+    {"fred/series/search/related_tags": "Get the related tags for a series search"},
+    {"fred/series/tags": "Get the tags for an economic data series"},
+    {"fred/series/updates": "Get economic data series sorted by when observations were updated on the FRED server"},
+    {"fred/series/vintagedates": "Get the dates in history when a series' data values were revised or new data values were released"},
+    {"fred/sources": "Get all sources of economic data"},
+    {"fred/source": "Get a source of economic data"},
+    {"fred/source/releases": "Get the releases for a source"},
+    {"fred/tags": "Get all tags, search for tags, or get tags by name"},
+    {"fred/related_tags": "Get the related tags for one or more tags"},
+    {"fred/tags/series": "Get the series matching tags"}
   ]
 }
