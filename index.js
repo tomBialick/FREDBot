@@ -103,7 +103,7 @@ bot.on('message', message => {
       for (var i = 0; i < responseJson.observations.length; i++) {
         let element = {
           x: responseJson.observations[i]['date'],
-          value: responseJson.observations[i]['value']
+          value: Number(responseJson.observations[i]['value'])
         }
         // dataSet[i].date = responseJson.observations[i]['date']
         // dataSet[i].value = responseJson.observations[i]['value']
