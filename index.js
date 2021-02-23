@@ -6,6 +6,8 @@ const FREDTOKEN = authStuff.fredKey
 let config = require('./config.json')
 const fetch = require('node-fetch');
 let prefix = "!"
+var fs = require('fs');
+var JSDOM = require('jsdom').JSDOM;
 
 let fredEndStr = "&api_key="+ FREDTOKEN +"&file_type=json"
 
@@ -21,10 +23,10 @@ bot.on('message', message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'help') {
-    message.channel.send('Here are a list of commands: \n * `!money printer`\n * `!help`\n * `!what`\n * `!get-categories`\n * `!get-subcategories [id]`\n' +
+    message.channel.send('Here are a list of commands: \n * `!money-printer`\n * `!help`\n * `!what`\n * `!get-categories`\n * `!get-subcategories [id]`\n ' +
     '* `!get-related-categories [id]`\n * `!get-category [id]`');
   }
-  else if (command === 'moneyprinter') {
+  else if (command === 'money-printer') {
     message.channel.send('BRRRRRRR');
   }
   else if (command === 'what') {
@@ -86,6 +88,59 @@ bot.on('message', message => {
         outStr += "id: " + responseJson.categories[i].id + "\n" + "name: " + responseJson.categories[i].name + "\n\n"
       }
       message.channel.send(outStr);
+    })
+  }
+  else if (command === 'sample-chart') {
+    fetch( config.fred_url + 'series/observations?' + "series_id=GNPCA" + fredEndStr, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+    }).then(response => response.json()).then((responseJson) => {
+      // console.log(responseJson);
+      let dataSet = []
+
+      for (var i = 0; i < responseJson.observations.length; i++) {
+        let element = {
+          x: responseJson.observations[i]['date'],
+          value: responseJson.observations[i]['value']
+        }
+        // dataSet[i].date = responseJson.observations[i]['date']
+        // dataSet[i].value = responseJson.observations[i]['value']
+        dataSet = [...dataSet, element]
+      }
+
+      // Create instance of JSDOM.
+      var jsdom = new JSDOM('<body><div id="container"></div></body>', {runScripts: 'dangerously'});
+      // Get window
+      var window = jsdom.window;
+      // require anychart and anychart export modules
+      var anychart = require('anychart')(window);
+      var anychartExport = require('anychart-nodejs')(anychart);
+
+      // create and a chart to the jsdom window.
+      // chart creating should be called only right after anychart-nodejs module requiring
+      var chart = anychart.line(dataSet);
+      chart.bounds(0, 0, 1000, 1000);
+      chart.container('container');
+      chart.draw();
+
+      // generate JPG image and save it to a file
+      anychartExport.exportTo(chart, 'png').then(function(image) {
+        fs.writeFile('chart.png', image, function(fsWriteError) {
+          if (fsWriteError) {
+            console.log(fsWriteError);
+          } else {
+            console.log('Complete');
+          }
+        });
+      }, function(generationError) {
+        console.log(generationError);
+      });
+
+
+      // console.log(dataSet);
+      message.channel.send("check logs");
     })
   }
 });
