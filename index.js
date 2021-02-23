@@ -126,8 +126,8 @@ bot.on('message', message => {
       chart.draw();
 
       // generate JPG image and save it to a file
-      anychartExport.exportTo(chart, 'png').then(function(image) {
-        fs.writeFile('chart.png', image, function(fsWriteError) {
+      anychartExport.exportTo(chart, 'pdf').then(function(image) {
+        fs.writeFile('chart.pdf', image, function(fsWriteError) {
           if (fsWriteError) {
             console.log(fsWriteError);
           } else {
@@ -137,10 +137,13 @@ bot.on('message', message => {
       }, function(generationError) {
         console.log(generationError);
       });
+      
+      message.channel.send("Hey! Here is the chart:", { files: ["./outFolder/chart.pdf"] });
 
+      fs.unlink('chart.pdf', (err) => {
+        if (err) throw err;
+      });
 
-      // console.log(dataSet);
-      message.channel.send("check logs");
     })
   }
 });
