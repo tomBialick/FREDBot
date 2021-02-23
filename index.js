@@ -131,19 +131,15 @@ bot.on('message', message => {
           if (fsWriteError) {
             console.log(fsWriteError);
           } else {
-            console.log('Complete');
+            message.channel.send("Hey! Here is the chart:", { files: ["./outFolder/chart.pdf"] });
+            fs.unlink('./outFolder/chart.pdf', (err) => {
+              if (err) throw err;
+            });
           }
         });
       }, function(generationError) {
         console.log(generationError);
       });
-
-      message.channel.send("Hey! Here is the chart:", { files: ["./outFolder/chart.pdf"] });
-
-      fs.unlink('./outFolder/chart.pdf', (err) => {
-        if (err) throw err;
-      });
-
     })
   }
 });
