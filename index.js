@@ -132,12 +132,14 @@ bot.on('message', message => {
             console.log(fsWriteError);
           } else {
             message.channel.send("Hey! Here is the chart:", { files: {attachment: './outFolder/chart.jpg',name: 'chart.jpg'}})
-            .then({
+            .then(() => {
               fs.unlink('./outFolder/chart.jpg', (err) => {
                 if (err) throw err;
               });
             })
-            .catch(console.error);
+            .catch(err => {
+              console.log(err);
+            });
           }
         });
       }, function(generationError) {
@@ -186,12 +188,14 @@ bot.on('message', message => {
               console.log(fsWriteError);
             } else {
               message.channel.send("Hey! Here is the chart:", { files: {attachment: './outFolder/chart.jpg',name: 'chart.jpg'}})
-              .then({
+              .then(() => {
                 fs.unlink('./outFolder/chart.jpg', (err) => {
                   if (err) throw err;
                 });
               })
-              .catch(console.error);
+              .catch(err => {
+                console.log(err);
+              });
             }
           });
         }, function(generationError) {
