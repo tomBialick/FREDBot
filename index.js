@@ -146,61 +146,62 @@ bot.on('message', message => {
         console.log(generationError);
       });
     })
-    else if (command === 'get-GNPC-observations') {
-      fetch( config.fred_url + 'series/observations?' + "series_id=GNPCA&observation_end=" + args[0] + fredEndStr, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-      }).then(response => response.json()).then((responseJson) => {
-        // console.log(responseJson);
-        let dataSet = []
-
-        for (var i = 0; i < responseJson.observations.length; i++) {
-          let element = {
-            x: responseJson.observations[i]['date'],
-            value: Number(responseJson.observations[i]['value'])
-          }
-          // dataSet[i].date = responseJson.observations[i]['date']
-          // dataSet[i].value = responseJson.observations[i]['value']
-          dataSet = [...dataSet, element]
-        }
-
-        // Create instance of JSDOM.
-        var jsdom = new JSDOM('<body><div id="container"></div></body>', {runScripts: 'dangerously'});
-        // Get window
-        var window = jsdom.window;
-        // require anychart and anychart export modules
-        var anychart = require('anychart')(window);
-        var anychartExport = require('anychart-nodejs')(anychart);
-
-        // create and a chart to the jsdom window.
-        // chart creating should be called only right after anychart-nodejs module requiring
-        var chart = anychart.line(dataSet);
-        chart.bounds(0, 0, 1000, 1000);
-        chart.container('container');
-        chart.draw();
-
-        // generate JPG image and save it to a file
-        anychartExport.exportTo(chart, 'jpg').then(function(image) {
-          fs.writeFile('./outFolder/chart.jpg', image, function(fsWriteError) {
-            if (fsWriteError) {
-              console.log(fsWriteError);
-            } else {
-              message.channel.send("Hey! Here is the chart:", { files: {attachment: './outFolder/chart.jpg',name: 'chart.jpg'}})
-              .then(() => {
-                fs.unlink('./outFolder/chart.jpg', (err) => {
-                  if (err) throw err;
-                });
-              })
-              .catch(err => {
-                console.log(err);
-              });
-            }
-          });
-        }, function(generationError) {
-          console.log(generationError);
-        });
-      })
   }
+  else if (command === 'get-GNPC-observations') {
+    fetch( config.fred_url + 'series/observations?' + "series_id=GNPCA&observation_end=" + args[0] + fredEndStr, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+    }).then(response => response.json()).then((responseJson) => {
+      // console.log(responseJson);
+      let dataSet = []
+
+      for (var i = 0; i < responseJson.observations.length; i++) {
+        let element = {
+          x: responseJson.observations[i]['date'],
+          value: Number(responseJson.observations[i]['value'])
+        }
+        // dataSet[i].date = responseJson.observations[i]['date']
+        // dataSet[i].value = responseJson.observations[i]['value']
+        dataSet = [...dataSet, element]
+      }
+
+      // Create instance of JSDOM.
+      var jsdom = new JSDOM('<body><div id="container"></div></body>', {runScripts: 'dangerously'});
+      // Get window
+      var window = jsdom.window;
+      // require anychart and anychart export modules
+      var anychart = require('anychart')(window);
+      var anychartExport = require('anychart-nodejs')(anychart);
+
+      // create and a chart to the jsdom window.
+      // chart creating should be called only right after anychart-nodejs module requiring
+      var chart = anychart.line(dataSet);
+      chart.bounds(0, 0, 1000, 1000);
+      chart.container('container');
+      chart.draw();
+
+      // generate JPG image and save it to a file
+      anychartExport.exportTo(chart, 'jpg').then(function(image) {
+        fs.writeFile('./outFolder/chart.jpg', image, function(fsWriteError) {
+          if (fsWriteError) {
+            console.log(fsWriteError);
+          } else {
+            message.channel.send("Hey! Here is the chart:", { files: {attachment: './outFolder/chart.jpg',name: 'chart.jpg'}})
+            .then(() => {
+              fs.unlink('./outFolder/chart.jpg', (err) => {
+                if (err) throw err;
+              });
+            })
+            .catch(err => {
+              console.log(err);
+            });
+          }
+        });
+      }, function(generationError) {
+        console.log(generationError);
+      });
+    })
+  }  
 });
