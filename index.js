@@ -24,7 +24,7 @@ bot.on('message', message => {
 
   if (command === 'help') {
     message.channel.send('Here are a list of commands: \n * `!money-printer`\n * `!help`\n * `!what`\n * `!get-categories`\n * `!get-subcategories [id]`\n ' +
-    '* `!get-related-categories [id]`\n * `!get-category [id]`\n * `!`!sample-chart`\n * `!get-GNPC-observations [start YYYY-MM-DD]`');
+    '* `!get-related-categories [id]`\n * `!get-category [id]`\n * `!`!sample-chart`\n * `!get-gnpc-observations [start YYYY-MM-DD]`');
   }
   else if (command === 'money-printer') {
     message.channel.send('BRRRRRRR');
@@ -147,8 +147,8 @@ bot.on('message', message => {
       });
     })
   }
-  else if (command === 'get-GNPC-observations') {
-    fetch( config.fred_url + 'series/observations?' + "series_id=GNPCA&observation_end=" + args[0] + fredEndStr, {
+  else if (command === 'get-gnpc-observations') {
+    fetch( config.fred_url + 'series/observations?' + "series_id=GNPCA&observation_start=" + args[0] + fredEndStr, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
