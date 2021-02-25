@@ -131,7 +131,7 @@ bot.on('message', message => {
           if (fsWriteError) {
             console.log(fsWriteError);
           } else {
-            message.channel.send("Hey! Here is the chart:", { files: {attachment: './outFolder/chart.pdf',name: 'chart.pdf'}})
+            message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.pdf',name: 'chart.pdf'}]})
             .then(() => {
               fs.unlink('./outFolder/chart.pdf', (err) => {
                 if (err) throw err;
@@ -188,7 +188,7 @@ bot.on('message', message => {
           if (fsWriteError) {
             console.log(fsWriteError);
           } else {
-            message.channel.send("Hey! Here is the chart:", { files: {attachment: './outFolder/chart.pdf',name: 'chart.pdf'}})
+            message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.pdf',name: 'chart.pdf'}]})
             .then(() => {
               fs.unlink('./outFolder/chart.pdf', (err) => {
                 if (err) throw err;
