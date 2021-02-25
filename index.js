@@ -24,7 +24,7 @@ bot.on('message', message => {
 
   if (command === 'help') {
     message.channel.send('Here are a list of commands: \n * `!money-printer`\n * `!help`\n * `!what`\n * `!get-categories`\n * `!get-subcategories [id]`\n ' +
-    '* `!get-related-categories [id]`\n * `!get-category [id]` \n * `get-GNPC-observations [start YYYY-MM-DD]`');
+    '* `!get-related-categories [id]`\n * `!get-category [id]`\n * `!`!sample-chart`\n * `!get-GNPC-observations [start YYYY-MM-DD]`');
   }
   else if (command === 'money-printer') {
     message.channel.send('BRRRRRRR');
@@ -125,15 +125,15 @@ bot.on('message', message => {
       chart.container('container');
       chart.draw();
 
-      // generate JPG image and save it to a file
-      anychartExport.exportTo(chart, 'jpg').then(function(image) {
-        fs.writeFile('./outFolder/chart.jpg', image, function(fsWriteError) {
+      // generate pdf image and save it to a file
+      anychartExport.exportTo(chart, 'pdf').then(function(image) {
+        fs.writeFile('./outFolder/chart.pdf', image, function(fsWriteError) {
           if (fsWriteError) {
             console.log(fsWriteError);
           } else {
-            message.channel.send("Hey! Here is the chart:", { files: {attachment: './outFolder/chart.jpg',name: 'chart.jpg'}})
+            message.channel.send("Hey! Here is the chart:", { files: {attachment: './outFolder/chart.pdf',name: 'chart.pdf'}})
             .then(() => {
-              fs.unlink('./outFolder/chart.jpg', (err) => {
+              fs.unlink('./outFolder/chart.pdf', (err) => {
                 if (err) throw err;
               });
             })
@@ -182,15 +182,15 @@ bot.on('message', message => {
       chart.container('container');
       chart.draw();
 
-      // generate JPG image and save it to a file
-      anychartExport.exportTo(chart, 'jpg').then(function(image) {
-        fs.writeFile('./outFolder/chart.jpg', image, function(fsWriteError) {
+      // generate pdf image and save it to a file
+      anychartExport.exportTo(chart, 'pdf').then(function(image) {
+        fs.writeFile('./outFolder/chart.pdf', image, function(fsWriteError) {
           if (fsWriteError) {
             console.log(fsWriteError);
           } else {
-            message.channel.send("Hey! Here is the chart:", { files: {attachment: './outFolder/chart.jpg',name: 'chart.jpg'}})
+            message.channel.send("Hey! Here is the chart:", { files: {attachment: './outFolder/chart.pdf',name: 'chart.pdf'}})
             .then(() => {
-              fs.unlink('./outFolder/chart.jpg', (err) => {
+              fs.unlink('./outFolder/chart.pdf', (err) => {
                 if (err) throw err;
               });
             })
@@ -203,5 +203,5 @@ bot.on('message', message => {
         console.log(generationError);
       });
     })
-  }  
+  }
 });
