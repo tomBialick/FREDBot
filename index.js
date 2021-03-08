@@ -135,17 +135,27 @@ bot.on('message', message => {
             im.convert(['./outFolder/chart.pdf', './outFolder/chart.png'], function(err, stdout){
               if (err) {
                 console.log('Error:', err);
+                throw err;
               }
-              console.log('stdout:', stdout);
-              message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
-              .then(() => {
-                fs.unlink('./outFolder/chart.png', (err) => {
-                  if (err) throw err;
+              else {
+                console.log('stdout:', stdout);
+                message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
+                .then(() => {
+                  fs.unlink('./outFolder/chart.png', (err) => {
+                    if (err) {
+                      throw err
+                    }
+                    else {
+                      fs.unlink('./outFolder/chart.pdf', (err) => {
+                        if (err) throw err;
+                      });
+                    }
+                  });
+                })
+                .catch(err => {
+                  console.log(err);
                 });
-              })
-              .catch(err => {
-                console.log(err);
-              });
+              }
             });
           }
         });
@@ -198,17 +208,27 @@ bot.on('message', message => {
             im.convert(['./outFolder/chart.pdf', './outFolder/chart.png'], function(err, stdout){
               if (err) {
                 console.log('Error:', err);
+                throw err;
               }
-              console.log('stdout:', stdout);
-              message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
-              .then(() => {
-                fs.unlink('./outFolder/chart.png', (err) => {
-                  if (err) throw err;
+              else {
+                console.log('stdout:', stdout);
+                message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
+                .then(() => {
+                  fs.unlink('./outFolder/chart.png', (err) => {
+                    if (err) {
+                      throw err
+                    }
+                    else {
+                      fs.unlink('./outFolder/chart.pdf', (err) => {
+                        if (err) throw err;
+                      });
+                    }
+                  });
+                })
+                .catch(err => {
+                  console.log(err);
                 });
-              })
-              .catch(err => {
-                console.log(err);
-              });
+              }
             });
           }
         });
