@@ -3,6 +3,7 @@ const bot = new Discord.Client();
 let authStuff = require('./auth/creds.json');
 const TOKEN = authStuff.token
 const FREDTOKEN = authStuff.fredKey
+const FINNHUBTOKEN = authStuff.finnhubKey
 let config = require('./config.json')
 const fetch = require('node-fetch');
 let prefix = "!"
@@ -11,6 +12,7 @@ var JSDOM = require('jsdom').JSDOM;
 var im = require('imagemagick');
 
 let fredEndStr = "&api_key="+ FREDTOKEN +"&file_type=json"
+let finnhubEndStr = "&token=" + FINNHUBTOKEN
 
 bot.login(TOKEN);
 
@@ -25,7 +27,8 @@ bot.on('message', message => {
 
   if (command === 'help') {
     message.channel.send('Here are a list of commands: \n * `!money-printer`\n * `!help`\n * `!what`\n * `!get-categories`\n * `!get-subcategories [id]`\n ' +
-    '* `!get-related-categories [id]`\n * `!get-category [id]`\n * `!`!sample-chart`\n * `!get-gnpc-observations [start YYYY-MM-DD]`');
+    '* `!get-related-categories [id]`\n * `!get-category [id]`\n * `!sample-chart`\n * `!get-gnpc-observations [start YYYY-MM-DD]`\n * `!get-stock-quote [ticker]`' +
+    '\n * `!get-stock-news-sentiment [ticker]`');
   }
   else if (command === 'money-printer') {
     message.channel.send('BRRRRRRR');
@@ -123,6 +126,8 @@ bot.on('message', message => {
       // chart creating should be called only right after anychart-nodejs module requiring
       var chart = anychart.line(dataSet);
       chart.bounds(0, 0, 1000, 1000);
+      chart.title("Real Gross National Product")
+      chart.xAxis.title("Billions of Dollars")
       chart.container('container');
       chart.draw();
 
@@ -138,7 +143,6 @@ bot.on('message', message => {
                 throw err;
               }
               else {
-                console.log('stdout:', stdout);
                 message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
                 .then(() => {
                   fs.unlink('./outFolder/chart.png', (err) => {
@@ -196,6 +200,8 @@ bot.on('message', message => {
       // chart creating should be called only right after anychart-nodejs module requiring
       var chart = anychart.line(dataSet);
       chart.bounds(0, 0, 1000, 1000);
+      chart.title("Real Gross National Product Since " + args[0])
+      chart.yAxis.title("Billions of Dollars")
       chart.container('container');
       chart.draw();
 
@@ -211,7 +217,6 @@ bot.on('message', message => {
                 throw err;
               }
               else {
-                console.log('stdout:', stdout);
                 message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
                 .then(() => {
                   fs.unlink('./outFolder/chart.png', (err) => {
@@ -236,5 +241,46 @@ bot.on('message', message => {
         console.log(generationError);
       });
     })
+  }
+  else if (command === 'get-stock-quote') {
+    fetch( config.finnhub_url + 'quote?' + "symbol=" + args[0].toUpperCase() + finnhubEndStr, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+    }).then(response => response.json()).then((responseJson) => {
+      console.log(responseJson);
+      let outStr = "Current Quote for: " + args[0].toUpperCase()
+      outStr += "\nCurrent Price: $" + responseJson.c
+      outStr += "\nDaily High: $" + responseJson.h
+      outStr += "\nDaily Low: $" + responseJson.l
+      outStr += "\nToday's Open: $" + responseJson.o
+      outStr += "\nYesterday's Close: $" + responseJson.pc
+      outStr += "\n\nToday's Gain/Loss: $" + (responseJson.c - responseJson.pc)
+      outStr += "\nToday's Gain/Loss: " + (((responseJson.c - responseJson.pc)/responseJson.pc) * 100) + "%"
+      message.channel.send(outStr);
+    });
+  }
+  else if (command === 'get-stock-news-sentiment') {
+    fetch( config.finnhub_url + 'news-sentiment?' + "symbol=" + args[0].toUpperCase() + finnhubEndStr, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+    }).then(response => response.json()).then((responseJson) => {
+      console.log(responseJson);
+      let outStr = "News Sentiment of the past week for: " + args[0].toUpperCase()
+      outStr += "\nBuzz"
+      outStr += "\nNumber of Articles: " + responseJson.buzz.articlesInLastWeek
+      outStr += "\nBuzz Score: " + responseJson.buzz.buzz
+      outStr += "\nWeekly Average: " + responseJson.buzz.weeklyAverage
+      outStr += "\n\nCompany News Score: " + responseJson.companyNewsScore
+      outStr += "\nSector Average Bullish Percent: " + responseJson.sectorAverageBullishPercent
+      outStr += "\nSector Average News Score: " + responseJson.sectorAverageNewsScore
+      outStr += "\n\nSentiment"
+      outStr += "\nBearish Percent: " + responseJson.sentiment.bearishPercent
+      outStr += "\nBullish Percent: " + responseJson.sentiment.bullishPercent
+      message.channel.send(outStr);
+    });
   }
 });
