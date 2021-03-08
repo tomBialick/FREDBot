@@ -8,6 +8,7 @@ const fetch = require('node-fetch');
 let prefix = "!"
 var fs = require('fs');
 var JSDOM = require('jsdom').JSDOM;
+var im = require('imagemagick');
 
 let fredEndStr = "&api_key="+ FREDTOKEN +"&file_type=json"
 
@@ -125,20 +126,26 @@ bot.on('message', message => {
       chart.container('container');
       chart.draw();
 
-      // generate pdf image and save it to a file
+      // generate pdf, convert to a png, and save it to a file
       anychartExport.exportTo(chart, 'pdf').then(function(image) {
         fs.writeFile('./outFolder/chart.pdf', image, function(fsWriteError) {
           if (fsWriteError) {
             console.log(fsWriteError);
           } else {
-            message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.pdf',name: 'chart.pdf'}]})
-            .then(() => {
-              fs.unlink('./outFolder/chart.pdf', (err) => {
-                if (err) throw err;
+            im.convert(['./outFolder/chart.pdf', './outFolder/chart.png'], function(err, stdout){
+              if (err) {
+                console.log('Error:', err);
+              }
+              console.log('stdout:', stdout);
+              message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.pdf'}]})
+              .then(() => {
+                fs.unlink('./outFolder/chart.png', (err) => {
+                  if (err) throw err;
+                });
+              })
+              .catch(err => {
+                console.log(err);
               });
-            })
-            .catch(err => {
-              console.log(err);
             });
           }
         });
@@ -182,20 +189,26 @@ bot.on('message', message => {
       chart.container('container');
       chart.draw();
 
-      // generate pdf image and save it to a file
+      // generate pdf, convert to a png, and save it to a file
       anychartExport.exportTo(chart, 'pdf').then(function(image) {
         fs.writeFile('./outFolder/chart.pdf', image, function(fsWriteError) {
           if (fsWriteError) {
             console.log(fsWriteError);
           } else {
-            message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.pdf',name: 'chart.pdf'}]})
-            .then(() => {
-              fs.unlink('./outFolder/chart.pdf', (err) => {
-                if (err) throw err;
+            im.convert(['./outFolder/chart.pdf', './outFolder/chart.png'], function(err, stdout){
+              if (err) {
+                console.log('Error:', err);
+              }
+              console.log('stdout:', stdout);
+              message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.pdf'}]})
+              .then(() => {
+                fs.unlink('./outFolder/chart.png', (err) => {
+                  if (err) throw err;
+                });
+              })
+              .catch(err => {
+                console.log(err);
               });
-            })
-            .catch(err => {
-              console.log(err);
             });
           }
         });
