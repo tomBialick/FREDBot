@@ -137,7 +137,7 @@ bot.on('message', message => {
                 console.log('Error:', err);
               }
               console.log('stdout:', stdout);
-              message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.pdf'}]})
+              message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
               .then(() => {
                 fs.unlink('./outFolder/chart.png', (err) => {
                   if (err) throw err;
@@ -200,7 +200,7 @@ bot.on('message', message => {
                 console.log('Error:', err);
               }
               console.log('stdout:', stdout);
-              message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.pdf'}]})
+              message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
               .then(() => {
                 fs.unlink('./outFolder/chart.png', (err) => {
                   if (err) throw err;
