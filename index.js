@@ -26,9 +26,9 @@ bot.on('message', message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'help') {
-    message.channel.send('Here are a list of commands: \n * `!money-printer`\n * `!help`\n * `!what`\n * `!get-categories`\n * `!get-subcategories [id]`\n ' +
-    '* `!get-related-categories [id]`\n * `!get-category [id]`\n * `!sample-chart`\n * `!get-gnpc-observations [start YYYY-MM-DD]`\n * `!get-stock-quote [ticker]`' +
-    '\n * `!get-stock-news-sentiment [ticker]`');
+    message.channel.send('Here are a list of commands: \n * `!money-printer`\n * `!help`\n * `!what`\n * `!categories`\n * `!subcategories [id]`\n ' +
+    '* `!related-categories [id]`\n * `!category [id]`\n * `!sample-chart`\n * `!gnpc-observations [start YYYY-MM-DD]`\n * `!get [ticker]`' +
+    '\n * `!news-score [ticker]`');
   }
   else if (command === 'money-printer') {
     message.channel.send('BRRRRRRR');
@@ -36,7 +36,7 @@ bot.on('message', message => {
   else if (command === 'what') {
     message.channel.send('I am a bot that grabs data from the Federal Reserve Economic Data from St Louis!');
   }
-  else if (command === 'get-categories') {
+  else if (command === 'categories') {
     fetch( config.fred_url + 'category/children?' + "category_id=0" + fredEndStr, {
       method: 'GET',
       headers: {
@@ -50,7 +50,7 @@ bot.on('message', message => {
       message.channel.send(outStr);
     })
   }
-  else if (command === 'get-subcategories') {
+  else if (command === 'subcategories') {
     fetch( config.fred_url + 'category/children?' + "category_id=" + args[0] + fredEndStr, {
       method: 'GET',
       headers: {
@@ -64,7 +64,7 @@ bot.on('message', message => {
       message.channel.send(outStr);
     })
   }
-  else if (command === 'get-related-categories') {
+  else if (command === 'related-categories') {
     fetch( config.fred_url + 'category/related?' + "category_id=" + args[0] + fredEndStr, {
       method: 'GET',
       headers: {
@@ -79,7 +79,7 @@ bot.on('message', message => {
       message.channel.send(outStr);
     })
   }
-  else if (command === 'get-category') {
+  else if (command === 'category') {
     fetch( config.fred_url + 'category?' + "category_id=" + args[0] + fredEndStr, {
       method: 'GET',
       headers: {
@@ -168,7 +168,7 @@ bot.on('message', message => {
       });
     })
   }
-  else if (command === 'get-gnpc-observations') {
+  else if (command === 'gnpc-observations') {
     fetch( config.fred_url + 'series/observations?' + "series_id=GNPCA&observation_start=" + args[0] + fredEndStr, {
       method: 'GET',
       headers: {
@@ -242,7 +242,7 @@ bot.on('message', message => {
       });
     })
   }
-  else if (command === 'get-stock-quote') {
+  else if (command === 'get') {
     fetch( config.finnhub_url + 'quote?' + "symbol=" + args[0].toUpperCase() + finnhubEndStr, {
       method: 'GET',
       headers: {
@@ -261,7 +261,7 @@ bot.on('message', message => {
       message.channel.send(outStr);
     });
   }
-  else if (command === 'get-stock-news-sentiment') {
+  else if (command === 'news-score') {
     fetch( config.finnhub_url + 'news-sentiment?' + "symbol=" + args[0].toUpperCase() + finnhubEndStr, {
       method: 'GET',
       headers: {
@@ -278,8 +278,8 @@ bot.on('message', message => {
       outStr += "\nSector Average Bullish Percent: " + responseJson.sectorAverageBullishPercent
       outStr += "\nSector Average News Score: " + responseJson.sectorAverageNewsScore
       outStr += "\n\nSentiment"
-      outStr += "\nBearish Percent: " + responseJson.sentiment.bearishPercent
       outStr += "\nBullish Percent: " + responseJson.sentiment.bullishPercent
+      outStr += "\nBearish Percent: " + responseJson.sentiment.bearishPercent
       message.channel.send(outStr);
     });
   }
