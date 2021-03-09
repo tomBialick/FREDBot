@@ -251,13 +251,13 @@ bot.on('message', message => {
     }).then(response => response.json()).then((responseJson) => {
       console.log(responseJson);
       let outStr = "Current Quote for: " + args[0].toUpperCase()
-      outStr += "\nCurrent Price: $" + responseJson.c
-      outStr += "\nDaily High: $" + responseJson.h
-      outStr += "\nDaily Low: $" + responseJson.l
-      outStr += "\nToday's Open: $" + responseJson.o
-      outStr += "\nYesterday's Close: $" + responseJson.pc
-      outStr += "\n\nToday's Gain/Loss: $" + (responseJson.c - responseJson.pc)
-      outStr += "\nToday's Gain/Loss: " + (((responseJson.c - responseJson.pc)/responseJson.pc) * 100) + "%"
+      outStr += "\nCurrent Price: $" + responseJson.c.toFixed(2)
+      outStr += "\nDaily High: $" + responseJson.h.toFixed(2)
+      outStr += "\nDaily Low: $" + responseJson.l.toFixed(2)
+      outStr += "\nToday's Open: $" + responseJson.o.toFixed(2)
+      outStr += "\nYesterday's Close: $" + responseJson.pc.toFixed(2)
+      outStr += "\n\nToday's Gain/Loss: $" + (responseJson.c - responseJson.pc).toFixed(2)
+      outStr += "\nToday's Gain/Loss: " + (((responseJson.c - responseJson.pc)/responseJson.pc) * 100).toFixed(3) + "%"
       message.channel.send(outStr);
     });
   }
