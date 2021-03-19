@@ -15,7 +15,12 @@ After cloning:
 {
   "secret":"<your discord bot secret>",
   "token":"<your discord bot token>",
-  "fredKey":"<your FRED api key>"
+  "fredKey":"<your FRED api key>",
+  "finnhubKey":"<your Finnhub api key>",
+  "redditUser":"<your Reddit username>",
+  "redditPass":"<your Reddit password>",
+  "redditID":"<your Reddit id>",
+  "redditSecret":"<your Reddit secret key>"
 }
 ```  
 

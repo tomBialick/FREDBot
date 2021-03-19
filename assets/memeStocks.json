@@ -1,0 +1,38 @@
+[
+  {
+    "ticker":"GME",
+    "name":"GameStop"
+  },
+  {
+    "ticker":"PLTR",
+    "name":"Palantir"
+  },
+  {
+    "ticker":"RKT",
+    "name":"Rocket Companies"
+  },
+  {
+    "ticker":"NOK", 
+    "name":"Nokia"
+  },
+  {
+    "ticker":"UWMC",
+    "name":"UWM Holdings"
+  },
+  {
+    "ticker":"BB",
+    "name":"BlackBerry"
+  },
+  {
+    "ticker":"NIO",
+    "name":"Nio"
+  },
+  {
+    "ticker":"TSLA",
+    "name":"Tesla"
+  },
+  {
+    "ticker":"AMD",
+    "name":"Advanced Micro Devices"
+  }
+]

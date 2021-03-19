@@ -33,5 +33,6 @@
     {"fred/related_tags": "Get the related tags for one or more tags"},
     {"fred/tags/series": "Get the series matching tags"}
   ],
-  "finnhub_url":"https://finnhub.io/api/v1/"
+  "finnhub_url":"https://finnhub.io/api/v1/",
+  "user_agent":"javascript:com.example.FREDBOTSCRAPER:v1.0.0 (by /u/tb7150)"
 }
