@@ -521,75 +521,188 @@ bot.on('message', message => {
 
             }
 
-            let outStr = "wallstreetbets hype:\n"
-            outStr += "\tMeme Stocks:\n"
+            let outStr = ""
+
+            // outStr = "wallstreetbets hype:\n"
+            // outStr += "\tMeme Stocks:\n"
+            // message.channel.send(outStr);
+            // outStr = ""
+            // memeStockStats.map(element => {
+            //   outStr += "`Ticker                        : " + element.ticker + "`\n"
+            //   outStr += "`Name                          : " + element.name + "`\n"
+            //   outStr += "`Mentions in Daily Thread      : " + element.dailyThreadMention + "`\n"
+            //   outStr += "`Megathreads                   : " + element.megaThreadCount + "`\n"
+            //   outStr += "`Megathread Comment Count      : " + element.megaThreadCommentsCount + "`\n"
+            //   outStr += "`DD Posts                      : " + element.ddCount + "`\n"
+            //   outStr += "`DD Comment Count              : " + element.ddCommentsCount + "`\n"
+            //   outStr += "`Discussion Posts              : " + element.discussionCount + "`\n"
+            //   outStr += "`Discussion Comment Count      : " + element.discussionCommentsCount + "`\n"
+            //   outStr += "`Chart Posts                   : " + element.chartCount + "`\n"
+            //   outStr += "`Chart Comment Count           : " + element.chartCommentsCount + "`\n"
+            //   outStr += "`YOLO Posts                    : " + element.yoloCount + "`\n"
+            //   outStr += "`YOLO Comment Count            : " + element.yoloCommentsCount + "`\n"
+            //   outStr += "`Gain Posts                    : " + element.gainCount + "`\n"
+            //   outStr += "`Gain Comment Count            : " + element.gainCommentsCount + "`\n"
+            //   outStr += "`Loss Posts                    : " + element.lossCount + "`\n"
+            //   outStr += "`Loss Comment Count            : " + element.lossCommentsCount + "`\n"
+            //   outStr += "`Meme Posts                    : " + element.memeCount + "`\n"
+            //   outStr += "`Meme Comment Count            : " + element.memeCommentsCount + "`\n"
+            //   outStr += "`News Posts                    : " + element.newsCount + "`\n"
+            //   outStr += "`News Comment Count            : " + element.newsCommentsCount + "`\n"
+            //   outStr += "`Tech Analysis Posts           : " + element.technicalAnalysisCount + "`\n"
+            //   outStr += "`Tech Analysis Comment Count   : " + element.technicalAnalysisCommentsCount + "`\n"
+            //   outStr += "`Shitpost Posts                : " + element.shitpostCount + "`\n"
+            //   outStr += "`Shitpost Comment Count        : " + element.shitpostCommentsCount + "`\n"
+            //   outStr += "`Unflaired Posts               : " + element.unflairedCount + "`\n"
+            //   outStr += "`Unflaired Comment Count       : " + element.unflairedCommentsCount + "`\n"
+            //   outStr += "\n"
+            //   message.channel.send(outStr);
+            //   outStr = ""
+            // })
+            let memeStockStatsTotal = {
+              name: "Meme Stock Average",
+              dailyThreadMention: 0,
+              megaThreadCount: 0,
+              ddCount: 0,
+              discussionCount: 0,
+              chartCount: 0,
+              yoloCount: 0,
+              gainCount: 0,
+              lossCount: 0,
+              memeCount: 0,
+              newsCount: 0,
+              technicalAnalysisCount: 0,
+              shitpostCount: 0,
+              unflairedCount: 0,
+              megaThreadCommentsCount: 0,
+              ddCommentsCount: 0,
+              discussionCommentsCount: 0,
+              chartCommentsCount: 0,
+              yoloCommentsCount: 0,
+              gainCommentsCount: 0,
+              lossCommentsCount: 0,
+              memeCommentsCount: 0,
+              newsCommentsCount: 0,
+              technicalAnalysisCommentsCount: 0,
+              shitpostCommentsCount: 0,
+              unflairedCommentsCount: 0
+            }
             memeStockStats.map(element => {
-              outStr += "\t\tTicker\t\t\t\t\t\t\t\t\t\t : " + element.ticker + "\n"
-              outStr += "\t\tName\t\t\t\t\t\t\t\t\t\t\t : " + element.name + "\n"
-              outStr += "\t\tMentions in Daily Thread\t : " + element.dailyThreadMention + "\n"
-              outStr += "\t\tMegathreads\t\t\t\t\t\t\t\t: " + element.megaThreadCount + "\n"
-              outStr += "\t\tMegathread Comment Count\t : " + element.megaThreadCommentsCount + "\n"
-              outStr += "\t\tDD Posts\t\t\t\t\t\t\t\t\t : " + element.ddCount + "\n"
-              outStr += "\t\tDD Comment Count\t\t\t\t\t : " + element.ddCommentsCount + "\n"
-              outStr += "\t\tDiscussion Posts\t\t\t\t\t : " + element.discussionCount + "\n"
-              outStr += "\t\tDiscussion Comment Count\t : " + element.discussionCommentsCount + "\n"
-              outStr += "\t\tChart Posts\t\t\t\t\t\t\t\t: " + element.chartCount + "\n"
-              outStr += "\t\tChart Comment Count\t\t\t\t: " + element.chartCommentsCount + "\n"
-              outStr += "\t\tYOLO Posts\t\t\t\t\t\t\t\t : " + element.yoloCount + "\n"
-              outStr += "\t\tYOLO Comment Count\t\t\t\t : " + element.yoloCommentsCount + "\n"
-              outStr += "\t\tGain Posts\t\t\t\t\t\t\t\t : " + element.gainCount + "\n"
-              outStr += "\t\tGain Comment Count\t\t\t\t : " + element.gainCommentsCount + "\n"
-              outStr += "\t\tLoss Posts\t\t\t\t\t\t\t\t : " + element.lossCount + "\n"
-              outStr += "\t\tLoss Comment Count\t\t\t\t : " + element.lossCommentsCount + "\n"
-              outStr += "\t\tMeme Posts\t\t\t\t\t\t\t\t : " + element.memeCount + "\n"
-              outStr += "\t\tMeme Comment Count\t\t\t\t : " + element.memeCommentsCount + "\n"
-              outStr += "\t\tNews Posts\t\t\t\t\t\t\t\t : " + element.newsCount + "\n"
-              outStr += "\t\tNews Comment Count\t\t\t\t : " + element.newsCommentsCount + "\n"
-              outStr += "\t\tTech Analysis Posts\t\t\t\t: " + element.technicalAnalysisCount + "\n"
-              outStr += "\t\tTech Analysis Comment Count: " + element.technicalAnalysisCommentsCount + "\n"
-              outStr += "\t\tShitpost Posts\t\t\t\t\t\t : " + element.shitpostCount + "\n"
-              outStr += "\t\tShitpost Comment Count\t\t : " + element.shitpostCommentsCount + "\n"
-              outStr += "\t\tUnflaired Posts\t\t\t\t\t\t: " + element.unflairedCount + "\n"
-              outStr += "\t\tUnflaired Comment Count\t\t: " + element.unflairedCommentsCount + "\n"
-              outStr += "\n"
-              message.channel.send(outStr);
-              outStr = ""
+              memeStockStatsTotal.dailyThreadMention += element.dailyThreadMention
+              memeStockStatsTotal.megaThreadCount += element.megaThreadCount
+              memeStockStatsTotal.megaThreadCommentsCount += element.megaThreadCommentsCount
+              memeStockStatsTotal.ddCount += element.ddCount
+              memeStockStatsTotal.ddCommentsCount += element.ddCommentsCount
+              memeStockStatsTotal.discussionCount += element.discussionCount
+              memeStockStatsTotal.discussionCommentsCount += element.discussionCommentsCount
+              memeStockStatsTotal.chartCount += element.chartCount
+              memeStockStatsTotal.chartCommentsCount += element.chartCommentsCount
+              memeStockStatsTotal.yoloCount += element.yoloCount
+              memeStockStatsTotal.yoloCommentsCount += element.yoloCommentsCount
+              memeStockStatsTotal.gainCount += element.gainCount
+              memeStockStatsTotal.gainCommentsCount += element.gainCommentsCount
+              memeStockStatsTotal.lossCount += element.lossCount
+              memeStockStatsTotal.lossCommentsCount += element.lossCommentsCount
+              memeStockStatsTotal.memeCount += element.memeCount
+              memeStockStatsTotal.memeCommentsCount += element.memeCommentsCount
+              memeStockStatsTotal.newsCount += element.newsCount
+              memeStockStatsTotal.newsCommentsCount += element.newsCommentsCount
+              memeStockStatsTotal.technicalAnalysisCount += element.technicalAnalysisCount
+              memeStockStatsTotal.technicalAnalysisCommentsCount += element.technicalAnalysisCommentsCount
+              memeStockStatsTotal.shitpostCount += element.shitpostCount
+              memeStockStatsTotal.shitpostCommentsCount += element.shitpostCommentsCount
+              memeStockStatsTotal.unflairedCount += element.unflairedCount
+              memeStockStatsTotal.unflairedCommentsCount += element.unflairedCommentsCount
             })
-            outStr += "\tUser Supplied Stock:\n"
-            outStr += "\t\tTicker\t\t\t\t\t\t\t\t\t\t : " + userSuppliedTicker.ticker + "\n"
-            outStr += "\t\tName\t\t\t\t\t\t\t\t\t\t\t : " + userSuppliedTicker.alt_names + "\n"
-            outStr += "\t\tMentions in Daily Thread\t : " + userSuppliedTicker.dailyThreadMention + "\n"
-            outStr += "\t\tMegathreads\t\t\t\t\t\t\t\t: " + userSuppliedTicker.megaThreadCount + "\n"
-            outStr += "\t\tMegathread Comment Count\t : " + userSuppliedTicker.megaThreadCommentsCount + "\n"
-            outStr += "\t\tDD Posts\t\t\t\t\t\t\t\t\t : " + userSuppliedTicker.ddCount + "\n"
-            outStr += "\t\tDD Comment Count\t\t\t\t\t : " + userSuppliedTicker.ddCommentsCount + "\n"
-            outStr += "\t\tDiscussion Posts\t\t\t\t\t : " + userSuppliedTicker.discussionCount + "\n"
-            outStr += "\t\tDiscussion Comment Count\t : " + userSuppliedTicker.discussionCommentsCount + "\n"
-            outStr += "\t\tChart Posts\t\t\t\t\t\t\t\t: " + userSuppliedTicker.chartCount + "\n"
-            outStr += "\t\tChart Comment Count\t\t\t\t: " + userSuppliedTicker.chartCommentsCount + "\n"
-            outStr += "\t\tYOLO Posts\t\t\t\t\t\t\t\t : " + userSuppliedTicker.yoloCount + "\n"
-            outStr += "\t\tYOLO Comment Count\t\t\t\t : " + userSuppliedTicker.yoloCommentsCount + "\n"
-            outStr += "\t\tGain Posts\t\t\t\t\t\t\t\t : " + userSuppliedTicker.gainCount + "\n"
-            outStr += "\t\tGain Comment Count\t\t\t\t : " + userSuppliedTicker.gainCommentsCount + "\n"
-            outStr += "\t\tLoss Posts\t\t\t\t\t\t\t\t : " + userSuppliedTicker.lossCount + "\n"
-            outStr += "\t\tLoss Comment Count\t\t\t\t : " + userSuppliedTicker.lossCommentsCount + "\n"
-            outStr += "\t\tMeme Posts\t\t\t\t\t\t\t\t : " + userSuppliedTicker.memeCount + "\n"
-            outStr += "\t\tMeme Comment Count\t\t\t\t : " + userSuppliedTicker.memeCommentsCount + "\n"
-            outStr += "\t\tNews Posts\t\t\t\t\t\t\t\t : " + userSuppliedTicker.newsCount + "\n"
-            outStr += "\t\tNews Comment Count\t\t\t\t : " + userSuppliedTicker.newsCommentsCount + "\n"
-            outStr += "\t\tTech Analysis Posts\t\t\t\t: " + userSuppliedTicker.technicalAnalysisCount + "\n"
-            outStr += "\t\tTech Analysis Comment Count: " + userSuppliedTicker.technicalAnalysisCommentsCount + "\n"
-            outStr += "\t\tShitpost Posts\t\t\t\t\t\t : " + userSuppliedTicker.shitpostCount + "\n"
-            outStr += "\t\tShitpost Comment Count\t\t : " + userSuppliedTicker.shitpostCommentsCount + "\n"
-            outStr += "\t\tUnflaired Posts\t\t\t\t\t\t: " + userSuppliedTicker.unflairedCount + "\n"
-            outStr += "\t\tUnflaired Comment Count\t\t: " + userSuppliedTicker.unflairedCommentsCount + "\n"
-            outStr += "\n"
+
+            memeStockStatsTotal.dailyThreadMention = Math.ceil(memeStockStatsTotal.dailyThreadMention/memeStockStats.length)
+            memeStockStatsTotal.megaThreadCount = Math.ceil(memeStockStatsTotal.megaThreadCoun/memeStockStats.length)
+            memeStockStatsTotal.megaThreadCommentsCount = Math.ceil(memeStockStatsTotal.megaThreadCommentsCount/memeStockStats.length)
+            memeStockStatsTotal.ddCount = Math.ceil(memeStockStatsTotal.ddCount/memeStockStats.length)
+            memeStockStatsTotal.ddCommentsCount = Math.ceil(memeStockStatsTotal.ddCommentsCount/memeStockStats.length)
+            memeStockStatsTotal.discussionCount = Math.ceil(memeStockStatsTotal.discussionCount/memeStockStats.length)
+            memeStockStatsTotal.discussionCommentsCount = Math.ceil(memeStockStatsTotal.discussionCommentsCount/memeStockStats.length)
+            memeStockStatsTotal.chartCount = Math.ceil(memeStockStatsTotal.chartCount/memeStockStats.length)
+            memeStockStatsTotal.chartCommentsCount = Math.ceil(memeStockStatsTotal.chartCommentsCount/memeStockStats.length)
+            memeStockStatsTotal.yoloCount = Math.ceil(memeStockStatsTotal.yoloCount/memeStockStats.length)
+            memeStockStatsTotal.yoloComments = Math.ceil(memeStockStatsTotal.yoloComments/memeStockStats.length)
+            memeStockStatsTotal.gainCount = Math.ceil(memeStockStatsTotal.gainCount/memeStockStats.length)
+            memeStockStatsTotal.gainComments = Math.ceil(memeStockStatsTotal.gainComments/memeStockStats.length)
+            memeStockStatsTotal.lossCount = Math.ceil(memeStockStatsTotal.lossCount/memeStockStats.length)
+            memeStockStatsTotal.lossComments = Math.ceil(memeStockStatsTotal.lossComment/memeStockStats.length)
+            memeStockStatsTotal.memeCount = Math.ceil(memeStockStatsTotal.memeCount/memeStockStats.length)
+            memeStockStatsTotal.memeComments = Math.ceil(memeStockStatsTotal.memeComments/memeStockStats.length)
+            memeStockStatsTotal.newsCount = Math.ceil(memeStockStatsTotal.newsCount/memeStockStats.length)
+            memeStockStatsTotal.newsCommentsCount = Math.ceil(memeStockStatsTotal.newsCommentsCount/memeStockStats.length)
+            memeStockStatsTotal.technicalAnalysisCount = Math.ceil(memeStockStatsTotal.technicalAnalysisCount/memeStockStats.length)
+            memeStockStatsTotal.technicalAnalysisCommentsCount = Math.ceil(memeStockStatsTotal.technicalAnalysisCommentsCount/memeStockStats.length)
+            memeStockStatsTotal.shitpostCount = Math.ceil(memeStockStatsTotal.shitpostCount/memeStockStats.length)
+            memeStockStatsTotal.shitpostCommentsCount = Math.ceil(memeStockStatsTotal.shitpostCommentsCount/memeStockStats.length)
+            memeStockStatsTotal.unflairedCount = Math.ceil(memeStockStatsTotal.unflairedCount/memeStockStats.length)
+            memeStockStatsTotal.unflairedCommentsCount = Math.ceil(memeStockStatsTotal.unflairedCommentsCount/memeStockStats.length)
+
+            outStr += "Hypescore for " + userSuppliedTicker.ticker + " with alt names: " + userSuppliedTicker.alt_names + "\n"
+            outStr += (userSuppliedTicker.dailyThreadMention)? "`User Stock Mentions in Daily Thread       : " + userSuppliedTicker.dailyThreadMention + "`\n`Avg Meme Stock Mentions in Daily Thread   : " + memeStockStatsTotal.dailyThreadMention + "`\n": "";
+            outStr += (userSuppliedTicker.megaThreadCount)? "`User Stock Megathreads                    : " + userSuppliedTicker.megaThreadCount + "`\n`Avg Meme Stock Megathreads                : " + memeStockStatsTotal.megaThreadCount + "`\n": "";
+            outStr += (userSuppliedTicker.megaThreadCommentsCount)? "`User Stock Megathread Comment Count       : " + userSuppliedTicker.megaThreadCommentsCount + "`\n`Avg Meme Stock Megathread Comment Count   : " + memeStockStatsTotal.megaThreadCommentsCount + "`\n": "";
+            outStr += (userSuppliedTicker.ddCount)? "`User Stock DD Posts                       : " + userSuppliedTicker.ddCount + "`\n`Avg Meme Stock DD Posts                   : " + memeStockStatsTotal.ddCount + "`\n": "";
+            outStr += (userSuppliedTicker.ddCommentsCount)? "`User Stock DD Comment Count               : " + userSuppliedTicker.ddCommentsCount + "`\n`Avg Meme Stock DD Comment Count           : " + memeStockStatsTotal.ddCommentsCount + "`\n": "";
+            outStr += (userSuppliedTicker.discussionCount)? "`User Stock Discussion Posts               : " + userSuppliedTicker.discussionCount + "`\n`Avg Meme Stock Discussion Posts           : " + memeStockStatsTotal.discussionCount + "`\n": "";
+            outStr += (userSuppliedTicker.discussionCommentsCount)? "`User Stock Discussion Comment Count       : " + userSuppliedTicker.discussionCommentsCount + "`\n`Avg Meme Stock Discussion Comment Count   : `" + memeStockStatsTotal.discussionCommentsCount + "`\n": "";
+            outStr += (userSuppliedTicker.chartCount)? "`User Stock Chart Posts                    : " + userSuppliedTicker.chartCount + "`\n`Avg Meme Stock Chart Posts                : " + memeStockStatsTotal.chartCount + "`\n": "";
+            outStr += (userSuppliedTicker.chartCommentsCount)? "`User Stock Chart Comment Count            : " + userSuppliedTicker.chartCommentsCount + "`\n`Avg Meme Stock Chart Comment Count: `" + memeStockStatsTotal.chartCommentsCount + "`\n": "";
+            outStr += (userSuppliedTicker.yoloCount)? "`User Stock YOLO Posts                     : " + userSuppliedTicker.yoloCount + "`\n`Avg Meme Stock YOLO Posts                 : " + memeStockStatsTotal.yoloCount + "`\n": "";
+            outStr += (userSuppliedTicker.yoloCommentsCount)? "`User Stock YOLO Comment Count             : " + userSuppliedTicker.yoloCommentsCount + "`\n`Avg Meme Stock YOLO Comment Count         : `" + memeStockStatsTotal.yoloComments + "`\n": "";
+            outStr += (userSuppliedTicker.gainCount)? "`User Stock Gain Posts                     : " + userSuppliedTicker.gainCount + "`\n`Avg Meme Stock Gain Posts                 : " + memeStockStatsTotal.gainCount + "`\n": "";
+            outStr += (userSuppliedTicker.gainCommentsCount)? "`User Stock Gain Comment Count             : " + userSuppliedTicker.gainCommentsCount + "`\n`Avg Meme Stock Gain Comment Count         : `" + memeStockStatsTotal.gainComments + "`\n": "";
+            outStr += (userSuppliedTicker.lossCount)? "`User Stock Loss Posts                     : " +userSuppliedTicker.lossCoun  + "`\n`Avg Meme Stock Loss Posts                 : " + memeStockStatsTotal.lossCount + "`\n": "";
+            outStr += (userSuppliedTicker.lossCommentsCount)? "`User Stock Loss Comment Count             : " + userSuppliedTicker.lossCommentsCount + "`\n`Avg Meme Stock Loss Comment Count         : `" + memeStockStatsTotal.lossComments + "`\n": "";
+            outStr += (userSuppliedTicker.memeCount)? "`User Stock Meme Posts                     : " + userSuppliedTicker.memeCount + "`\n`Avg Meme Stock Meme Posts                 : " + memeStockStatsTotal.memeCount + "`\n": "";
+            outStr += (userSuppliedTicker.memeCommentsCount)? "`User Stock Meme Comment Count             : " + userSuppliedTicker.memeCommentsCount + "`\n`Avg Meme Stock Meme Comment Count         : `" + memeStockStatsTotal.memeComments + "`\n": "";
+            outStr += (userSuppliedTicker.newsCount)? "`User Stock News Posts                     : " + userSuppliedTicker.newsCount + "`\n`Avg Meme Stock News Posts                 : " + memeStockStatsTotal.newsCount + "`\n": "";
+            outStr += (userSuppliedTicker.newsCommentsCount)? "`User Stock News Comment Count             : " + userSuppliedTicker.newsCommentsCount + "`\n`Avg Meme Stock News Comment Count         : " + memeStockStatsTotal.newsCommentsCount + "`\n": "";
+            outStr += (userSuppliedTicker.technicalAnalysisCount)? "`User Stock Tech Analysis Posts            : " + userSuppliedTicker.technicalAnalysisCount + "`\n`Avg Meme Stock Tech Analysis Posts        : " + memeStockStatsTotal.technicalAnalysisCount + "`\n": "";
+            outStr += (userSuppliedTicker.technicalAnalysisCommentsCount)? "`User Stock Tech Analysis Comment Count    : " + userSuppliedTicker.technicalAnalysisCommentsCount + "`\n`Avg Meme Stock Tech Analysis Comment Count: " + memeStockStatsTotal.technicalAnalysisCommentsCount + "`\n": "";
+            outStr += (userSuppliedTicker.shitpostCount)? "`User Stock Shitpost Posts                 : " + userSuppliedTicker.shitpostCount + "`\n`Avg Meme Stock Shitpost Posts             : " + memeStockStatsTotal.shitpostCount + "`\n": "";
+            outStr += (userSuppliedTicker.shitpostCommentsCount)? "`User Stock Shitpost Comment Count         : " + userSuppliedTicker.shitpostCommentsCount + "`\n`Avg Meme Stock Shitpost Comment Count     : " + memeStockStatsTotal.shitpostCommentsCount + "`\n": "";
+            outStr += (userSuppliedTicker.unflairedCount)? "`User Stock Unflaired Posts                : " + userSuppliedTicker.unflairedCount + "`\n`Avg Meme Stock Unflaired Posts            : " + memeStockStatsTotal.unflairedCount + "`\n": "";
+            outStr += (userSuppliedTicker.unflairedCommentsCount)? "`User Stock Unflaired Comment Count        : " + userSuppliedTicker.unflairedCommentsCount + "`\n`Avg Meme Stock Unflaired Comment Count    : " + memeStockStatsTotal.unflairedCommentsCount + "`\n": "";
+
+            // outStr += "\tUser Supplied Stock:\n"
+            // outStr += "`Ticker                        : " + userSuppliedTicker.ticker + "`\n"
+            // outStr += "`Name(s)                       : " + userSuppliedTicker.alt_names + "`\n"
+            // outStr += "`Mentions in Daily Thread      : " + userSuppliedTicker.dailyThreadMention + "`\n"
+            // outStr += "`Megathreads                   : " + userSuppliedTicker.megaThreadCount + "`\n"
+            // outStr += "`Megathread Comment Count      : " + userSuppliedTicker.megaThreadCommentsCount + "`\n"
+            // outStr += "`DD Posts                      : " + userSuppliedTicker.ddCount + "`\n"
+            // outStr += "`DD Comment Count              : " + userSuppliedTicker.ddCommentsCount + "`\n"
+            // outStr += "`Discussion Posts              : " + userSuppliedTicker.discussionCount + "`\n"
+            // outStr += "`Discussion Comment Count      : " + userSuppliedTicker.discussionCommentsCount + "`\n"
+            // outStr += "`Chart Posts                   : " + userSuppliedTicker.chartCount + "`\n"
+            // outStr += "`Chart Comment Count           : " + userSuppliedTicker.chartCommentsCount + "`\n"
+            // outStr += "`YOLO Posts                    : " + userSuppliedTicker.yoloCount + "`\n"
+            // outStr += "`YOLO Comment Count            : " + userSuppliedTicker.yoloCommentsCount + "`\n"
+            // outStr += "`Gain Posts                    : " + userSuppliedTicker.gainCount + "`\n"
+            // outStr += "`Gain Comment Count            : " + userSuppliedTicker.gainCommentsCount + "`\n"
+            // outStr += "`Loss Posts                    : " + userSuppliedTicker.lossCount + "`\n"
+            // outStr += "`Loss Comment Count            : " + userSuppliedTicker.lossCommentsCount + "`\n"
+            // outStr += "`Meme Posts                    : " + userSuppliedTicker.memeCount + "`\n"
+            // outStr += "`Meme Comment Count            : " + userSuppliedTicker.memeCommentsCount + "`\n"
+            // outStr += "`News Posts                    : " + userSuppliedTicker.newsCount + "`\n"
+            // outStr += "`News Comment Count            : " + userSuppliedTicker.newsCommentsCount + "`\n"
+            // outStr += "`Tech Analysis Posts           : " + userSuppliedTicker.technicalAnalysisCount + "`\n"
+            // outStr += "`Tech Analysis Comment Count   : " + userSuppliedTicker.technicalAnalysisCommentsCount + "`\n"
+            // outStr += "`Shitpost Posts                : " + userSuppliedTicker.shitpostCount + "`\n"
+            // outStr += "`Shitpost Comment Count        : " + userSuppliedTicker.shitpostCommentsCount + "`\n"
+            // outStr += "`Unflaired Posts               : " + userSuppliedTicker.unflairedCount + "`\n"
+            // outStr += "`Unflaired Comment Count       : " + userSuppliedTicker.unflairedCommentsCount + "`\n"
+            // outStr += "\n"
             message.channel.send(outStr);
             outStr = ""
 
             outStr += "Analysis and ratios to come; not all posts and comments on the daily thread were analyzed\n\n"
-            outStr += "Daily Thread Comments Counted: " + totalCommentCount + "\n"
-            outStr += "Posts Counted: " + submissions.length + "\n"
+            outStr += "`Daily Thread Comments Counted : " + totalCommentCount + "`\n"
+            outStr += "`Posts Counted                 : " + submissions.length + "`\n"
             // let memeCount = 0;
             // console.log("Percent Meme on the:     " + ((memeCount/totalCommentCount).toFixed(4) * 100) + "%");
             message.channel.send(outStr);
