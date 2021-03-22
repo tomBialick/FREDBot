@@ -43,8 +43,10 @@ bot.on('message', message => {
 
   if (command === 'help') {
     message.channel.send('Here are a list of commands: \n * `!money-printer`\n * `!help`\n * `!what`\n * `!categories`\n * `!subcategories [id]`\n ' +
-    '* `!related-categories [id]`\n * `!category [id]`\n * `!sample-chart`\n * `!gnpc-observations [start YYYY-MM-DD]`\n * `!get [ticker]`' +
-    '\n * `!news-score [ticker]`\n * `!hype-score [ticker] [name] [other aliases]`\n * `!add-meme-ticker [ticker] [name]`');
+    '* `!related-categories [id]`\n * `!category [id]`\n * `!sample-chart`\n * `!gnpc-graph [start YYYY-MM-DD]`\n * `!get [ticker]`' +
+    '\n * `!news-score [ticker]`\n * `!hype-score [ticker] [name] [other aliases]`\n * `!add-meme-ticker [ticker] [name]`' +
+    '\n * `!m2-velocity-graph [start YYYY-MM-DD]`\n * `!m2-stock-graph [start YYYY-MM-DD]`\n * `!bitcoin-graph [start YYYY-MM-DD]`' +
+    '\n * `!gold-graph [start YYYY-MM-DD]`\n * `!total-corporate-debt-graph [start YYYY-MM-DD]`');
   }
   else if (command === 'money-printer') {
     message.channel.send('BRRRRRRR');
@@ -184,7 +186,7 @@ bot.on('message', message => {
       });
     })
   }
-  else if (command === 'gnpc-observations') {
+  else if (command === 'gnpc-graph') {
     fetch( config.fred_url + 'series/observations?' + "series_id=GNPCA&observation_start=" + args[0] + fredEndStr, {
       method: 'GET',
       headers: {
@@ -738,5 +740,375 @@ bot.on('message', message => {
     else {
       message.channel.send("Missing Args; I need a ticker, then the company name i.e `AAPL Apple`");
     }
+  }
+  else if (command === 'm2-velocity-graph') {
+    fetch( config.fred_url + 'series/observations?' + "series_id=M2V&observation_start=" + args[0] + fredEndStr, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+    }).then(response => response.json()).then((responseJson) => {
+      // console.log(responseJson);
+      let dataSet = []
+
+      for (var i = 0; i < responseJson.observations.length; i++) {
+        let element = {
+          x: responseJson.observations[i]['date'],
+          value: Number(responseJson.observations[i]['value'])
+        }
+        // dataSet[i].date = responseJson.observations[i]['date']
+        // dataSet[i].value = responseJson.observations[i]['value']
+        dataSet = [...dataSet, element]
+      }
+
+      // Create instance of JSDOM.
+      var jsdom = new JSDOM('<body><div id="container"></div></body>', {runScripts: 'dangerously'});
+      // Get window
+      var window = jsdom.window;
+      // require anychart and anychart export modules
+      var anychart = require('anychart')(window);
+      var anychartExport = require('anychart-nodejs')(anychart);
+
+      // create and a chart to the jsdom window.
+      // chart creating should be called only right after anychart-nodejs module requiring
+      var chart = anychart.line(dataSet);
+      chart.bounds(0, 0, 1000, 1000);
+      chart.title("Velocity of M2 Money Stock Since " + args[0])
+      chart.yAxis.title("Ratio")
+      chart.container('container');
+      chart.draw();
+
+      // generate pdf, convert to a png, and save it to a file
+      anychartExport.exportTo(chart, 'pdf').then(function(image) {
+        fs.writeFile('./outFolder/chart.pdf', image, function(fsWriteError) {
+          if (fsWriteError) {
+            console.log(fsWriteError);
+          } else {
+            im.convert(['./outFolder/chart.pdf', './outFolder/chart.png'], function(err, stdout){
+              if (err) {
+                console.log('Error:', err);
+                throw err;
+              }
+              else {
+                message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
+                .then(() => {
+                  fs.unlink('./outFolder/chart.png', (err) => {
+                    if (err) {
+                      throw err
+                    }
+                    else {
+                      fs.unlink('./outFolder/chart.pdf', (err) => {
+                        if (err) throw err;
+                      });
+                    }
+                  });
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+              }
+            });
+          }
+        });
+      }, function(generationError) {
+        console.log(generationError);
+      });
+    })
+  }
+  else if (command === 'm2-stock-graph') {
+    fetch( config.fred_url + 'series/observations?' + "series_id=M2SL&observation_start=" + args[0] + fredEndStr, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+    }).then(response => response.json()).then((responseJson) => {
+      // console.log(responseJson);
+      let dataSet = []
+
+      for (var i = 0; i < responseJson.observations.length; i++) {
+        let element = {
+          x: responseJson.observations[i]['date'],
+          value: Number(responseJson.observations[i]['value'])
+        }
+        // dataSet[i].date = responseJson.observations[i]['date']
+        // dataSet[i].value = responseJson.observations[i]['value']
+        dataSet = [...dataSet, element]
+      }
+
+      // Create instance of JSDOM.
+      var jsdom = new JSDOM('<body><div id="container"></div></body>', {runScripts: 'dangerously'});
+      // Get window
+      var window = jsdom.window;
+      // require anychart and anychart export modules
+      var anychart = require('anychart')(window);
+      var anychartExport = require('anychart-nodejs')(anychart);
+
+      // create and a chart to the jsdom window.
+      // chart creating should be called only right after anychart-nodejs module requiring
+      var chart = anychart.line(dataSet);
+      chart.bounds(0, 0, 1000, 1000);
+      chart.title("M2 Money Stock Since " + args[0])
+      chart.yAxis.title("Billions of Dollars")
+      chart.container('container');
+      chart.draw();
+
+      // generate pdf, convert to a png, and save it to a file
+      anychartExport.exportTo(chart, 'pdf').then(function(image) {
+        fs.writeFile('./outFolder/chart.pdf', image, function(fsWriteError) {
+          if (fsWriteError) {
+            console.log(fsWriteError);
+          } else {
+            im.convert(['./outFolder/chart.pdf', './outFolder/chart.png'], function(err, stdout){
+              if (err) {
+                console.log('Error:', err);
+                throw err;
+              }
+              else {
+                message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
+                .then(() => {
+                  fs.unlink('./outFolder/chart.png', (err) => {
+                    if (err) {
+                      throw err
+                    }
+                    else {
+                      fs.unlink('./outFolder/chart.pdf', (err) => {
+                        if (err) throw err;
+                      });
+                    }
+                  });
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+              }
+            });
+          }
+        });
+      }, function(generationError) {
+        console.log(generationError);
+      });
+    })
+  }
+  else if (command === 'bitcoin-graph') {
+    fetch( config.fred_url + 'series/observations?' + "series_id=CBBTCUSD&observation_start=" + args[0] + fredEndStr, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+    }).then(response => response.json()).then((responseJson) => {
+      // console.log(responseJson);
+      let dataSet = []
+
+      for (var i = 0; i < responseJson.observations.length; i++) {
+        let element = {
+          x: responseJson.observations[i]['date'],
+          value: Number(responseJson.observations[i]['value'])
+        }
+        // dataSet[i].date = responseJson.observations[i]['date']
+        // dataSet[i].value = responseJson.observations[i]['value']
+        dataSet = [...dataSet, element]
+      }
+
+      // Create instance of JSDOM.
+      var jsdom = new JSDOM('<body><div id="container"></div></body>', {runScripts: 'dangerously'});
+      // Get window
+      var window = jsdom.window;
+      // require anychart and anychart export modules
+      var anychart = require('anychart')(window);
+      var anychartExport = require('anychart-nodejs')(anychart);
+
+      // create and a chart to the jsdom window.
+      // chart creating should be called only right after anychart-nodejs module requiring
+      var chart = anychart.line(dataSet);
+      chart.bounds(0, 0, 1000, 1000);
+      chart.title("Bitcound Price Since " + args[0])
+      chart.yAxis.title("Dollars")
+      chart.container('container');
+      chart.draw();
+
+      // generate pdf, convert to a png, and save it to a file
+      anychartExport.exportTo(chart, 'pdf').then(function(image) {
+        fs.writeFile('./outFolder/chart.pdf', image, function(fsWriteError) {
+          if (fsWriteError) {
+            console.log(fsWriteError);
+          } else {
+            im.convert(['./outFolder/chart.pdf', './outFolder/chart.png'], function(err, stdout){
+              if (err) {
+                console.log('Error:', err);
+                throw err;
+              }
+              else {
+                message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
+                .then(() => {
+                  fs.unlink('./outFolder/chart.png', (err) => {
+                    if (err) {
+                      throw err
+                    }
+                    else {
+                      fs.unlink('./outFolder/chart.pdf', (err) => {
+                        if (err) throw err;
+                      });
+                    }
+                  });
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+              }
+            });
+          }
+        });
+      }, function(generationError) {
+        console.log(generationError);
+      });
+    })
+  }
+  else if (command === 'gold-graph') {
+    fetch( config.fred_url + 'series/observations?' + "series_id=GOLDAMGBD228NLBM&observation_start=" + args[0] + fredEndStr, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+    }).then(response => response.json()).then((responseJson) => {
+      // console.log(responseJson);
+      let dataSet = []
+
+      for (var i = 0; i < responseJson.observations.length; i++) {
+        let element = {
+          x: responseJson.observations[i]['date'],
+          value: Number(responseJson.observations[i]['value'])
+        }
+        // dataSet[i].date = responseJson.observations[i]['date']
+        // dataSet[i].value = responseJson.observations[i]['value']
+        dataSet = [...dataSet, element]
+      }
+
+      // Create instance of JSDOM.
+      var jsdom = new JSDOM('<body><div id="container"></div></body>', {runScripts: 'dangerously'});
+      // Get window
+      var window = jsdom.window;
+      // require anychart and anychart export modules
+      var anychart = require('anychart')(window);
+      var anychartExport = require('anychart-nodejs')(anychart);
+
+      // create and a chart to the jsdom window.
+      // chart creating should be called only right after anychart-nodejs module requiring
+      var chart = anychart.line(dataSet);
+      chart.bounds(0, 0, 1000, 1000);
+      chart.title("Price of Gold in London Bullion Market Since " + args[0])
+      chart.yAxis.title("Dollars per Troy Ounce")
+      chart.container('container');
+      chart.draw();
+
+      // generate pdf, convert to a png, and save it to a file
+      anychartExport.exportTo(chart, 'pdf').then(function(image) {
+        fs.writeFile('./outFolder/chart.pdf', image, function(fsWriteError) {
+          if (fsWriteError) {
+            console.log(fsWriteError);
+          } else {
+            im.convert(['./outFolder/chart.pdf', './outFolder/chart.png'], function(err, stdout){
+              if (err) {
+                console.log('Error:', err);
+                throw err;
+              }
+              else {
+                message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
+                .then(() => {
+                  fs.unlink('./outFolder/chart.png', (err) => {
+                    if (err) {
+                      throw err
+                    }
+                    else {
+                      fs.unlink('./outFolder/chart.pdf', (err) => {
+                        if (err) throw err;
+                      });
+                    }
+                  });
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+              }
+            });
+          }
+        });
+      }, function(generationError) {
+        console.log(generationError);
+      });
+    })
+  }
+  else if (command === 'total-corporate-debt-graph') {
+    fetch( config.fred_url + 'series/observations?' + "series_id=BOGZ1FL894104005A&observation_start=" + args[0] + fredEndStr, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+    }).then(response => response.json()).then((responseJson) => {
+      // console.log(responseJson);
+      let dataSet = []
+
+      for (var i = 0; i < responseJson.observations.length; i++) {
+        let element = {
+          x: responseJson.observations[i]['date'],
+          value: Number(responseJson.observations[i]['value'])
+        }
+        // dataSet[i].date = responseJson.observations[i]['date']
+        // dataSet[i].value = responseJson.observations[i]['value']
+        dataSet = [...dataSet, element]
+      }
+
+      // Create instance of JSDOM.
+      var jsdom = new JSDOM('<body><div id="container"></div></body>', {runScripts: 'dangerously'});
+      // Get window
+      var window = jsdom.window;
+      // require anychart and anychart export modules
+      var anychart = require('anychart')(window);
+      var anychartExport = require('anychart-nodejs')(anychart);
+
+      // create and a chart to the jsdom window.
+      // chart creating should be called only right after anychart-nodejs module requiring
+      var chart = anychart.line(dataSet);
+      chart.bounds(0, 0, 1000, 1000);
+      chart.title("All Corporate Debt Securities and Loans Since " + args[0])
+      chart.yAxis.title("Millions of Dollars")
+      chart.container('container');
+      chart.draw();
+
+      // generate pdf, convert to a png, and save it to a file
+      anychartExport.exportTo(chart, 'pdf').then(function(image) {
+        fs.writeFile('./outFolder/chart.pdf', image, function(fsWriteError) {
+          if (fsWriteError) {
+            console.log(fsWriteError);
+          } else {
+            im.convert(['./outFolder/chart.pdf', './outFolder/chart.png'], function(err, stdout){
+              if (err) {
+                console.log('Error:', err);
+                throw err;
+              }
+              else {
+                message.channel.send("Hey! Here is the chart:", { files: [{attachment: './outFolder/chart.png',name: 'chart.png'}]})
+                .then(() => {
+                  fs.unlink('./outFolder/chart.png', (err) => {
+                    if (err) {
+                      throw err
+                    }
+                    else {
+                      fs.unlink('./outFolder/chart.pdf', (err) => {
+                        if (err) throw err;
+                      });
+                    }
+                  });
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+              }
+            });
+          }
+        });
+      }, function(generationError) {
+        console.log(generationError);
+      });
+    })
   }
 });
