@@ -145,7 +145,7 @@ bot.on('message', message => {
       var chart = anychart.line(dataSet);
       chart.bounds(0, 0, 1000, 1000);
       chart.title("Real Gross National Product")
-      chart.yAxis.title("Billions of Dollars")
+      chart.yAxis().title("Billions of Dollars")
       chart.container('container');
       chart.draw();
 
@@ -219,7 +219,7 @@ bot.on('message', message => {
       var chart = anychart.line(dataSet);
       chart.bounds(0, 0, 1000, 1000);
       chart.title("Real Gross National Product Since " + args[0])
-      chart.yAxis.title("Billions of Dollars")
+      chart.yAxis().title("Billions of Dollars")
       chart.container('container');
       chart.draw();
 
@@ -774,7 +774,7 @@ bot.on('message', message => {
       var chart = anychart.line(dataSet);
       chart.bounds(0, 0, 1000, 1000);
       chart.title("Velocity of M2 Money Stock Since " + args[0])
-      chart.yAxis.title("Ratio")
+      chart.yAxis().title("Ratio")
       chart.container('container');
       chart.draw();
 
@@ -848,7 +848,7 @@ bot.on('message', message => {
       var chart = anychart.line(dataSet);
       chart.bounds(0, 0, 1000, 1000);
       chart.title("M2 Money Stock Since " + args[0])
-      chart.yAxis.title("Billions of Dollars")
+      chart.yAxis().title("Billions of Dollars")
       chart.container('container');
       chart.draw();
 
@@ -922,7 +922,7 @@ bot.on('message', message => {
       var chart = anychart.line(dataSet);
       chart.bounds(0, 0, 1000, 1000);
       chart.title("Bitcound Price Since " + args[0])
-      chart.yAxis.title("Dollars")
+      chart.yAxis().title("Dollars")
       chart.container('container');
       chart.draw();
 
@@ -996,7 +996,7 @@ bot.on('message', message => {
       var chart = anychart.line(dataSet);
       chart.bounds(0, 0, 1000, 1000);
       chart.title("Price of Gold in London Bullion Market Since " + args[0])
-      chart.yAxis.title("Dollars per Troy Ounce")
+      chart.yAxis().title("Dollars per Troy Ounce")
       chart.container('container');
       chart.draw();
 
@@ -1070,7 +1070,7 @@ bot.on('message', message => {
       var chart = anychart.line(dataSet);
       chart.bounds(0, 0, 1000, 1000);
       chart.title("All Corporate Debt Securities and Loans Since " + args[0])
-      chart.yAxis.title("Millions of Dollars")
+      chart.yAxis().title("Millions of Dollars")
       chart.container('container');
       chart.draw();
 
