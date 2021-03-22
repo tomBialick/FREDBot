@@ -145,7 +145,7 @@ bot.on('message', message => {
       var chart = anychart.line(dataSet);
       chart.bounds(0, 0, 1000, 1000);
       chart.title("Real Gross National Product")
-      chart.xAxis.title("Billions of Dollars")
+      chart.yAxis.title("Billions of Dollars")
       chart.container('container');
       chart.draw();
 
