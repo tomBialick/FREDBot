@@ -718,7 +718,7 @@ bot.on('message', message => {
     }
   }
   else if (command === 'add-meme-ticker') {
-    if (args.length !== 2) {
+    if (args.length === 2) {
       if (memeTickerList.some(element => element.ticker === args[0].toUpperCase())) {
         message.channel.send("Ticker is already in the meme ticker list");
       }
