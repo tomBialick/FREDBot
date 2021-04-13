@@ -31,6 +31,7 @@ const r = new snoowrap({
 
 //if this gets big, fs.readFile might be necessary
 var memeTickerList = require("./assets/memeStocks.json")
+var audioPlaying = false
 
 bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
@@ -42,8 +43,9 @@ bot.on('message', message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'help') {
-    message.channel.send('Here are a list of commands: \n * `!money-printer`\n * `!help`\n * `!what`\n * `!categories`\n * `!subcategories [id]`\n ' +
-    '* `!related-categories [id]`\n * `!category [id]`\n * `!sample-chart`\n * `!gnpc-graph [start YYYY-MM-DD]`\n * `!get [ticker]`' +
+    message.channel.send('Here are a list of commands: \n * `!help`\n * `!money-printer`\n * `!what`\n * `!grunt`\n * `!boot`' +
+    '\n * `!wah`\n * `!airhorn`\n * `!error`\n * `!x-files`\n * `!money`\n * `!win`\n * `!finish-him`\n * `!metal-gear`\n * `!roger-roger`\n * `!loser`' +
+    '\n * `!sample-chart`\n * `!gnpc-graph [start YYYY-MM-DD]`\n * `!get [ticker]`' +
     '\n * `!news-score [ticker]`\n * `!hype-score [ticker] [name] [other aliases]`\n * `!add-meme-ticker [ticker] [name]`' +
     '\n * `!m2-velocity-graph [start YYYY-MM-DD]`\n * `!m2-stock-graph [start YYYY-MM-DD]`\n * `!bitcoin-graph [start YYYY-MM-DD]`' +
     '\n * `!total-corporate-debt-graph [start YYYY-MM-DD]`');//\n * `!gold-graph [start YYYY-MM-DD]`
@@ -53,64 +55,6 @@ bot.on('message', message => {
   }
   else if (command === 'what') {
     message.channel.send('I am a bot that grabs data from the Federal Reserve Economic Data from St Louis!');
-  }
-  else if (command === 'categories') {
-    fetch( config.fred_url + 'category/children?' + "category_id=0" + fredEndStr, {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json',
-      }
-    }).then(response => response.json()).then((responseJson) => {
-      let outStr = ""
-      for (var i = 0; i < responseJson.categories.length; i++) {
-        outStr += "id: " + responseJson.categories[i].id + "\n" + "name: " + responseJson.categories[i].name + "\n\n"
-      }
-      message.channel.send(outStr);
-    })
-  }
-  else if (command === 'subcategories') {
-    fetch( config.fred_url + 'category/children?' + "category_id=" + args[0] + fredEndStr, {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json',
-      }
-    }).then(response => response.json()).then((responseJson) => {
-      let outStr = ""
-      for (var i = 0; i < responseJson.categories.length; i++) {
-        outStr += "id: " + responseJson.categories[i].id + "\n" + "name: " + responseJson.categories[i].name + "\n\n"
-      }
-      message.channel.send(outStr);
-    })
-  }
-  else if (command === 'related-categories') {
-    fetch( config.fred_url + 'category/related?' + "category_id=" + args[0] + fredEndStr, {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json',
-      }
-    }).then(response => response.json()).then((responseJson) => {
-      console.log(responseJson);
-      let outStr = ""
-      for (var i = 0; i < responseJson.categories.length; i++) {
-        outStr += "id: " + responseJson.categories[i].id + "\n" + "name: " + responseJson.categories[i].name + "\n\n"
-      }
-      message.channel.send(outStr);
-    })
-  }
-  else if (command === 'category') {
-    fetch( config.fred_url + 'category?' + "category_id=" + args[0] + fredEndStr, {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json',
-      }
-    }).then(response => response.json()).then((responseJson) => {
-      console.log(responseJson);
-      let outStr = ""
-      for (var i = 0; i < responseJson.categories.length; i++) {
-        outStr += "id: " + responseJson.categories[i].id + "\n" + "name: " + responseJson.categories[i].name + "\n\n"
-      }
-      message.channel.send(outStr);
-    })
   }
   else if (command === 'sample-chart') {
     fetch( config.fred_url + 'series/observations?' + "series_id=GNPCA" + fredEndStr, {
@@ -921,7 +865,7 @@ bot.on('message', message => {
       // chart creating should be called only right after anychart-nodejs module requiring
       var chart = anychart.line(dataSet);
       chart.bounds(0, 0, 1000, 1000);
-      chart.title("Bitcound Price Since " + args[0])
+      chart.title("Bitcoin Price Since " + args[0])
       chart.yAxis().title("Dollars")
       chart.container('container');
       chart.draw();
@@ -1110,5 +1054,173 @@ bot.on('message', message => {
         console.log(generationError);
       });
     })
+  }
+  else if (command === 'boot') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/PS1.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'grunt') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/timallen.wav").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'finish-him') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/finishhim.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'metal-gear') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/metalgear.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'wah') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/wah.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'win') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/win.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'roger-roger') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/rogerx2.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'loser') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/loser.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'money') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/money.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'x-files') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/x-files.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'error') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/error.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'airhorn') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/airhorn.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
   }
 });
