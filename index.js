@@ -43,8 +43,7 @@ bot.on('message', message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'help') {
-    message.channel.send('Here are a list of commands: \n * `!help`\n * `!money-printer`\n * `!what`\n * `!grunt`\n * `!boot`' +
-    '\n * `!wah`\n * `!airhorn`\n * `!error`\n * `!x-files`\n * `!money`\n * `!win`\n * `!finish-him`\n * `!metal-gear`\n * `!roger-roger`\n * `!loser`' +
+    message.channel.send('Here are a list of commands: \n * `!help`\n * `!money-printer`\n * `!what`' +
     '\n * `!sample-chart`\n * `!gnpc-graph [start YYYY-MM-DD]`\n * `!get [ticker]`' +
     '\n * `!news-score [ticker]`\n * `!hype-score [ticker] [name] [other aliases]`\n * `!add-meme-ticker [ticker] [name]`' +
     '\n * `!m2-velocity-graph [start YYYY-MM-DD]`\n * `!m2-stock-graph [start YYYY-MM-DD]`\n * `!bitcoin-graph [start YYYY-MM-DD]`' +
@@ -55,6 +54,13 @@ bot.on('message', message => {
   }
   else if (command === 'what') {
     message.channel.send('I am a bot that grabs data from the Federal Reserve Economic Data from St Louis!');
+  }
+  else if (command === 'sounds') {
+    message.channel.send('Commands to play sounds in the voice channel you are in:' +
+    '\n * `!grunt` or `!1`\n * `!win` or `!2`\n * `!loser` or `!3`\n * `!metal-gear` or `!4`' +
+    '\n * `!wah` or `!5`\n * `!error` or `!6`\n * `!finish-him` or `!7`\n * `!roger-roger` or `!8`' +
+    '\n * `!airhorn` or `!9`\n * `!seinfeld` or `!10`\n * `!boot` or `!11`\n * `!x-files` or `!12`' +
+    '\n * `!money` or `!13`');
   }
   else if (command === 'sample-chart') {
     fetch( config.fred_url + 'series/observations?' + "series_id=GNPCA" + fredEndStr, {
@@ -1055,7 +1061,7 @@ bot.on('message', message => {
       });
     })
   }
-  else if (command === 'boot') {
+  else if (command === 'boot' || command === '11') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
@@ -1069,11 +1075,11 @@ bot.on('message', message => {
       })
     }
   }
-  else if (command === 'grunt') {
+  else if (command === 'grunt' || command === '1') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
-        VoiceConnection.play("./assets/timallen.wav").on("finish", () => {
+        VoiceConnection.play("./assets/timallen.mp3").on("finish", () => {
           audioPlaying = false
           VoiceConnection.disconnect()
         });
@@ -1083,7 +1089,7 @@ bot.on('message', message => {
       })
     }
   }
-  else if (command === 'finish-him') {
+  else if (command === 'finish-him' || command === '7') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
@@ -1097,7 +1103,7 @@ bot.on('message', message => {
       })
     }
   }
-  else if (command === 'metal-gear') {
+  else if (command === 'metal-gear' || command === '4') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
@@ -1111,7 +1117,7 @@ bot.on('message', message => {
       })
     }
   }
-  else if (command === 'wah') {
+  else if (command === 'wah' || command === '5') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
@@ -1125,7 +1131,7 @@ bot.on('message', message => {
       })
     }
   }
-  else if (command === 'win') {
+  else if (command === 'win' || command === '2') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
@@ -1139,7 +1145,7 @@ bot.on('message', message => {
       })
     }
   }
-  else if (command === 'roger-roger') {
+  else if (command === 'roger-roger' || command === '8') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
@@ -1153,7 +1159,7 @@ bot.on('message', message => {
       })
     }
   }
-  else if (command === 'loser') {
+  else if (command === 'loser' || command === '3') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
@@ -1167,7 +1173,7 @@ bot.on('message', message => {
       })
     }
   }
-  else if (command === 'money') {
+  else if (command === 'money' || command === '13') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
@@ -1181,7 +1187,7 @@ bot.on('message', message => {
       })
     }
   }
-  else if (command === 'x-files') {
+  else if (command === 'x-files' || command === '12') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
@@ -1195,7 +1201,7 @@ bot.on('message', message => {
       })
     }
   }
-  else if (command === 'error') {
+  else if (command === 'error' || command === '6') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
@@ -1209,11 +1215,25 @@ bot.on('message', message => {
       })
     }
   }
-  else if (command === 'airhorn') {
+  else if (command === 'airhorn' || command === '9') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
         VoiceConnection.play("./assets/airhorn.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'seinfeld' || command === '10') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/seinfeld.mp3").on("finish", () => {
           audioPlaying = false
           VoiceConnection.disconnect()
         });
