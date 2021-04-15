@@ -60,7 +60,7 @@ bot.on('message', message => {
     '\n * `!grunt` or `!1`\n * `!win` or `!2`\n * `!loser` or `!3`\n * `!metal-gear` or `!4`' +
     '\n * `!wah` or `!5`\n * `!error` or `!6`\n * `!finish-him` or `!7`\n * `!roger-roger` or `!8`' +
     '\n * `!airhorn` or `!9`\n * `!seinfeld` or `!10`\n * `!boot` or `!11`\n * `!x-files` or `!12`' +
-    '\n * `!money` or `!13`');
+    '\n * `!money` or `!13`\n * `!thx` or `!14`');
   }
   else if (command === 'sample-chart') {
     fetch( config.fred_url + 'series/observations?' + "series_id=GNPCA" + fredEndStr, {
@@ -1234,6 +1234,20 @@ bot.on('message', message => {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
         VoiceConnection.play("./assets/seinfeld.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'thx' || command === '14') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/thx.mp3").on("finish", () => {
           audioPlaying = false
           VoiceConnection.disconnect()
         });
