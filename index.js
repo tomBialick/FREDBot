@@ -677,7 +677,7 @@ bot.on('message', message => {
           'Content-Type': 'application/json',
       }
     }).then(response => response.json()).then((responseJson) => {
-      // console.log(responseJson);
+      console.log(responseJson);
       let outStr = "Social Sentiment for: " + args[0].toUpperCase()
       outStr += "\nReddit"
       outStr += "\nPosts/Mentions: " + responseJson.reddit[0].mention
@@ -687,12 +687,12 @@ bot.on('message', message => {
       outStr += "\nNegative Mentions: " + responseJson.reddit[0].negativeMention
       outStr += "\nScore: " + responseJson.reddit[0].score
       outStr += "\n\nTwitter"
-      outStr += "\nPosts/Mentions: " + responseJson.reddit[0].mention
-      outStr += "\nPositive Score: " + responseJson.reddit[0].positiveScore
-      outStr += "\nNegative Score: " + responseJson.reddit[0].negativeScore
-      outStr += "\nPositive Mentions: " + responseJson.reddit[0].positiveMention
-      outStr += "\nNegative Mentions: " + responseJson.reddit[0].negativeMention
-      outStr += "\nScore: " + responseJson.reddit[0].score
+      outStr += "\nPosts/Mentions: " + responseJson.twitter[0].mention
+      outStr += "\nPositive Score: " + responseJson.twitter[0].positiveScore
+      outStr += "\nNegative Score: " + responseJson.twitter[0].negativeScore
+      outStr += "\nPositive Mentions: " + responseJson.twitter[0].positiveMention
+      outStr += "\nNegative Mentions: " + responseJson.twitter[0].negativeMention
+      outStr += "\nScore: " + responseJson.twitter[0].score
       message.channel.send(outStr);
     });
   }
