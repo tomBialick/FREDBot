@@ -671,7 +671,7 @@ bot.on('message', message => {
     }
   }
   else if (command === 'social-score') {
-    fetch( config.finnhub_url + 'social-sentiment?' + "symbol=" + args[0].toUpperCase() + finnhubEndStr, {
+    fetch( config.finnhub_url + 'stock/social-sentiment?' + "symbol=" + args[0].toUpperCase() + finnhubEndStr, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
