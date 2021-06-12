@@ -677,22 +677,60 @@ bot.on('message', message => {
           'Content-Type': 'application/json',
       }
     }).then(response => response.json()).then((responseJson) => {
-      console.log(responseJson);
-      let outStr = "Social Sentiment for: " + args[0].toUpperCase()
+      // console.log(responseJson);
+      let outStr = "Social Sentiment for " + args[0].toUpperCase() + " Yesterday:"
+
+      let totalRedditMentionCount = 0
+      let avgRedditPositiveScore = 0
+      let avgRedditNegativeScore = 0
+      let totalRedditPositiveMentionCount = 0
+      let totalRedditNegativeMentionCount = 0
+      let avgRedditScore = 0
+      for (let i = 0; i < responseJson.reddit.length; i++) {
+        totalRedditMentionCount += responseJson.reddit[i].mention
+        avgRedditPositiveScore += responseJson.reddit[i].positiveScore
+        avgRedditNegativeScore += responseJson.reddit[i].negativeScore
+        totalRedditPositiveMentionCount += responseJson.reddit[i].positiveMention
+        totalRedditNegativeMentionCount += responseJson.reddit[i].negativeMention
+        avgRedditScore += responseJson.reddit[i].score
+      }
+      avgRedditPositiveScore /= responseJson.reddit.length
+      avgRedditNegativeScore /= responseJson.reddit.length
+      avgRedditScore /= responseJson.reddit.length
+
+
+      let totalTwitterMentionCount = 0
+      let avgTwitterPositiveScore = 0
+      let avgTwitterNegativeScore = 0
+      let totalTwitterPositiveMentionCount = 0
+      let totalTwitterNegativeMentionCount = 0
+      let avgTwitterScore = 0
+      for (let i = 0; i < responseJson.twitter.length; i++) {
+        totalTwitterMentionCount += responseJson.twitter[i].mention
+        avgTwitterPositiveScore += responseJson.twitter[i].positiveScore
+        avgTwitterNegativeScore += responseJson.twitter[i].negativeScore
+        totalTwitterPositiveMentionCount += responseJson.twitter[i].positiveMention
+        totalTwitterNegativeMentionCount += responseJson.twitter[i].negativeMention
+        avgTwitterScore += responseJson.twitter[i].score
+      }
+      avgTwitterPositiveScore /= responseJson.twitter.length
+      avgTwitterNegativeScore /= responseJson.twitter.length
+      avgTwitterScore /= responseJson.twitter.length
+
       outStr += "\nReddit"
-      outStr += "\nPosts/Mentions: " + responseJson.reddit[0].mention
-      outStr += "\nPositive Score: " + responseJson.reddit[0].positiveScore
-      outStr += "\nNegative Score: " + responseJson.reddit[0].negativeScore
-      outStr += "\nPositive Mentions: " + responseJson.reddit[0].positiveMention
-      outStr += "\nNegative Mentions: " + responseJson.reddit[0].negativeMention
-      outStr += "\nScore: " + responseJson.reddit[0].score
+      outStr += "\nPosts/Mentions: " + totalRedditMentionCount
+      outStr += "\nPositive Score: " + avgRedditPositiveScore
+      outStr += "\nNegative Score: " + avgRedditNegativeScore
+      outStr += "\nPositive Mentions: " + totalRedditPositiveMentionCount
+      outStr += "\nNegative Mentions: " + totalRedditNegativeMentionCount
+      outStr += "\nScore: " + avgRedditScore
       outStr += "\n\nTwitter"
-      outStr += "\nPosts/Mentions: " + responseJson.twitter[0].mention
-      outStr += "\nPositive Score: " + responseJson.twitter[0].positiveScore
-      outStr += "\nNegative Score: " + responseJson.twitter[0].negativeScore
-      outStr += "\nPositive Mentions: " + responseJson.twitter[0].positiveMention
-      outStr += "\nNegative Mentions: " + responseJson.twitter[0].negativeMention
-      outStr += "\nScore: " + responseJson.twitter[0].score
+      outStr += "\nPosts/Mentions: " + totalTwitterMentionCount
+      outStr += "\nPositive Score: " + avgTwitterPositiveScore
+      outStr += "\nNegative Score: " + avgTwitterNegativeScore
+      outStr += "\nPositive Mentions: " + totalTwitterPositiveMentionCount
+      outStr += "\nNegative Mentions: " + totalTwitterNegativeMentionCount
+      outStr += "\nScore: " + avgTwitterScore
       message.channel.send(outStr);
     });
   }
