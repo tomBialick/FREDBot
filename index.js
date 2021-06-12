@@ -45,9 +45,10 @@ bot.on('message', message => {
   if (command === 'help') {
     message.channel.send('Here are a list of commands: \n * `!help`\n * `!money-printer`\n * `!what`' +
     '\n * `!sample-chart`\n * `!gnpc-graph [start YYYY-MM-DD]`\n * `!get [ticker]`' +
-    '\n * `!news-score [ticker]`\n * `!hype-score [ticker] [name] [other aliases]`\n * `!add-meme-ticker [ticker] [name]`' +
-    '\n * `!m2-velocity-graph [start YYYY-MM-DD]`\n * `!m2-stock-graph [start YYYY-MM-DD]`\n * `!bitcoin-graph [start YYYY-MM-DD]`' +
-    '\n * `!total-corporate-debt-graph [start YYYY-MM-DD]`');//\n * `!gold-graph [start YYYY-MM-DD]`
+    '\n * `!news-score [ticker]`\n * `!hype-score [ticker] [name] [other aliases]`' +
+    '\n * `!social-score [ticker]`\n * `!add-meme-ticker [ticker] [name]`' +
+    '\n * `!m2-velocity-graph [start YYYY-MM-DD]`\n * `!m2-stock-graph [start YYYY-MM-DD]`' +
+    '\n * `!bitcoin-graph [start YYYY-MM-DD]`\n * `!total-corporate-debt-graph [start YYYY-MM-DD]`');//\n * `!gold-graph [start YYYY-MM-DD]`
   }
   else if (command === 'money-printer') {
     message.channel.send('BRRRRRRR');
@@ -668,6 +669,32 @@ bot.on('message', message => {
         })
       })
     }
+  }
+  else if (command === 'social-score') {
+    fetch( config.finnhub_url + 'social-sentiment?' + "symbol=" + args[0].toUpperCase() + finnhubEndStr, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+    }).then(response => response.json()).then((responseJson) => {
+      // console.log(responseJson);
+      let outStr = "Social Sentiment for: " + args[0].toUpperCase()
+      outStr += "\nReddit"
+      outStr += "\nPosts/Mentions: " + responseJson.reddit[0].mention
+      outStr += "\nPositive Score: " + responseJson.reddit[0].positiveScore
+      outStr += "\nNegative Score: " + responseJson.reddit[0].negativeScore
+      outStr += "\nPositive Mentions: " + responseJson.reddit[0].positiveMention
+      outStr += "\nNegative Mentions: " + responseJson.reddit[0].negativeMention
+      outStr += "\nScore: " + responseJson.reddit[0].score
+      outStr += "\n\nTwitter"
+      outStr += "\nPosts/Mentions: " + responseJson.reddit[0].mention
+      outStr += "\nPositive Score: " + responseJson.reddit[0].positiveScore
+      outStr += "\nNegative Score: " + responseJson.reddit[0].negativeScore
+      outStr += "\nPositive Mentions: " + responseJson.reddit[0].positiveMention
+      outStr += "\nNegative Mentions: " + responseJson.reddit[0].negativeMention
+      outStr += "\nScore: " + responseJson.reddit[0].score
+      message.channel.send(outStr);
+    });
   }
   else if (command === 'add-meme-ticker') {
     if (args.length === 2) {
