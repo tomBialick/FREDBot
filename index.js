@@ -1330,9 +1330,9 @@ bot.on('message', message => {
       let userToAnnoy = args[0]
       let duration = (parseInt(args[1]) <= 30)? parseInt(args[1]) * 1000: 30000; //limit duration to 30 seconds
       let clipStarted = false
-      client.on("guildMemberSpeaking", (member, speaking) => {
-        member.voice.channel.join().then(VoiceConnection => {
-          audioPlaying = true //TODO do this better
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        bot.on("guildMemberSpeaking", (member, speaking) => {
           setTimeout(() => {
             //end the annoying
             audioPlaying = false
@@ -1355,10 +1355,10 @@ bot.on('message', message => {
               //pause audio
               VoiceConnection.pause();
           }
-        }).catch(e => {
-          audioPlaying = false
-          console.log(e)
-        })
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
       });
     }
   }
