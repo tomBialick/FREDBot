@@ -1322,4 +1322,44 @@ bot.on('message', message => {
       })
     }
   }
+  else if (command === 'annoy') {
+    if (args.length < 2) {
+      message.channel.send("Missing Args; I need a the user's display name, then the duration in seconds (max of 30) i.e `User 10`");
+    }
+    else {
+      let userToAnnoy = args[0]
+      let duration = (parseInt(args[1]) <= 30)? parseInt(args[1]) * 1000: 30000; //limit duration to 30 seconds
+      let clipStarted = false
+      client.on("guildMemberSpeaking", (member, speaking) => {
+        member.voice.channel.join().then(VoiceConnection => {
+          audioPlaying = true //TODO do this better
+          setTimeout(() => {
+            //end the annoying
+            audioPlaying = false
+            VoiceConnection.disconnect();
+          }, duration)
+          if (speaking && member.displayName === userToAnnoy) {
+            if (!clipStarted) {
+              //start audio
+              VoiceConnection.play("./assets/annoying_clip.mp3").on("finish", () => {
+                audioPlaying = false
+                VoiceConnection.disconnect();
+              });
+            }
+            else {
+              //resume audio
+              VoiceConnection.resume();
+            }
+          }
+          else if (!speaking && member.displayName === userToAnnoy) {
+              //pause audio
+              VoiceConnection.pause();
+          }
+        }).catch(e => {
+          audioPlaying = false
+          console.log(e)
+        })
+      });
+    }
+  }
 });
