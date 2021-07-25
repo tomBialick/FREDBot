@@ -1340,7 +1340,7 @@ bot.on('message', message => {
             VoiceConnection.disconnect();
           }, duration)
           console.log(speaking)
-          if (speaking && member.displayName === userToAnnoy) {
+          if (speaking.bitfield === 1 && member.displayName === userToAnnoy) {
             if (!clipStarted) {
               clipStarted = true
               //start audio
@@ -1355,7 +1355,7 @@ bot.on('message', message => {
               dispatcher.resume();
             }
           }
-          else if (!speaking && member.displayName === userToAnnoy) {
+          else if (speaking.bitfield === 0 && member.displayName === userToAnnoy) {
             //pause audio
             dispatcher.pause();
           }
