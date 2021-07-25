@@ -1340,6 +1340,7 @@ bot.on('message', message => {
           }, duration)
           if (speaking && member.displayName === userToAnnoy) {
             if (!clipStarted) {
+              clipStarted = true
               //start audio
               VoiceConnection.play("./assets/annoying_clip.mp3").on("finish", () => {
                 audioPlaying = false
@@ -1352,8 +1353,8 @@ bot.on('message', message => {
             }
           }
           else if (!speaking && member.displayName === userToAnnoy) {
-              //pause audio
-              VoiceConnection.pause();
+            //pause audio
+            VoiceConnection.pause();
           }
         });
       }).catch(e => {
