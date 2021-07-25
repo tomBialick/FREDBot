@@ -1324,11 +1324,11 @@ bot.on('message', message => {
   }
   else if (command === 'annoy') {
     if (args.length < 2) {
-      message.channel.send("Missing Args; I need a the user's display name, then the duration in seconds (max of 30) i.e `User 10`");
+      message.channel.send("Missing Args; I need a the user's display name, then the duration in seconds (max of 60) i.e `User 10`");
     }
     else {
       let userToAnnoy = args[0]
-      let duration = (parseInt(args[1]) <= 30)? parseInt(args[1]) * 1000: 30000; //limit duration to 30 seconds
+      let duration = (parseInt(args[1]) <= 60)? parseInt(args[1]) * 1000: 60000; //limit duration to 30 seconds
       let clipStarted = false
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
