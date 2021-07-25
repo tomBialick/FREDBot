@@ -1326,7 +1326,7 @@ bot.on('message', message => {
     if (args.length < 2) {
       message.channel.send("Missing Args; I need a the user's display name, then the duration in seconds (max of 60) i.e `User 10`");
     }
-    else {
+    else if (!audioPlaying && message.member.voice.channel) {
       let userToAnnoy = args[0]
       let duration = (parseInt(args[1]) <= 60)? parseInt(args[1]) * 1000: 60000; //limit duration to 30 seconds
       let clipStarted = false
@@ -1339,11 +1339,10 @@ bot.on('message', message => {
             audioPlaying = false
             VoiceConnection.disconnect();
           }, duration)
-          console.log(speaking)
           if (speaking.bitfield === 1 && member.displayName === userToAnnoy) {
             if (!clipStarted) {
-              clipStarted = true
               //start audio
+              clipStarted = true
               dispatcher = VoiceConnection.play("./assets/annoying_clip.mp3").on("finish", () => {
                 audioPlaying = false
                 VoiceConnection.disconnect();
