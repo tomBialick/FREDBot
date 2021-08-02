@@ -1332,19 +1332,20 @@ bot.on('message', message => {
       // let clipStarted = false
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
-        let dispatcher = VoiceConnection.play("./assets/annoying_clip.mp3").on("finish", () => {
+        let dispatcher = VoiceConnection.play("./assets/annoying_clip.mp3");
+        dispatcher.pause();
+        let durationTimer = setTimeout(() => {
+          //end the annoying
+          audioPlaying = false
+          VoiceConnection.disconnect();
+        }, duration)
+        dispatcher.on("finish", () => {
           audioPlaying = false
           VoiceConnection.disconnect();
           clearTimeout(durationTimer);
         });
-        dispatcher.pause();
         bot.on("guildMemberSpeaking", (member, speaking) => {
-          console.log("Speaker: " + member + "Speaking: " + ((speaking.bitfield === 1)? "true": "false"))
-          let durationTimer = setTimeout(() => {
-            //end the annoying
-            audioPlaying = false
-            VoiceConnection.disconnect();
-          }, duration)
+          console.log("Speaker: " + member.displayName + " Speaking: " + ((speaking.bitfield === 1)? "true": "false"))
           if (speaking.bitfield === 1 && member.displayName === userToAnnoy) {
             // if (!clipStarted) {
             //   //start audio
