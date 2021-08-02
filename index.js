@@ -1338,7 +1338,7 @@ bot.on('message', message => {
           clearTimeout(durationTimer);
         });
         dispatcher.pause();
-        bot.on("speaking", (member, speaking) => {
+        bot.on("guildMemberSpeaking", (member, speaking) => {
           console.log("Speaker: " + member + "Speaking: " + ((speaking.bitfield === 1)? "true": "false"))
           let durationTimer = setTimeout(() => {
             //end the annoying
