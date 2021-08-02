@@ -1332,14 +1332,14 @@ bot.on('message', message => {
       // let clipStarted = false
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
-        let dispatcher = VoiceConnection.play("./assets/annoying_clip.mp3");
-        dispatcher.pause();
-        dispatcher.on("finish", () => {
+        let dispatcher = VoiceConnection.play("./assets/annoying_clip.mp3").on("finish", () => {
           audioPlaying = false
           VoiceConnection.disconnect();
           clearTimeout(durationTimer);
         });
+        dispatcher.pause();
         bot.on("speaking", (member, speaking) => {
+          console.log("Speaker: " + member + "Speaking: " + ((speaking.bitfield === 1)? "true": "false"))
           let durationTimer = setTimeout(() => {
             //end the annoying
             audioPlaying = false
