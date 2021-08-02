@@ -1332,8 +1332,14 @@ bot.on('message', message => {
       let clipStarted = false
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
-        let dispatcher;
-        bot.on("guildMemberSpeaking", (member, speaking) => {
+        let dispatcher = VoiceConnection.play("./assets/annoying_clip.mp3");
+        dispatcher.pause();
+        dispatcher.on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect();
+          clearTimeout(durationTimer);
+        });
+        bot.on("speaking", (member, speaking) => {
           let durationTimer = setTimeout(() => {
             //end the annoying
             audioPlaying = false
@@ -1343,11 +1349,6 @@ bot.on('message', message => {
             if (!clipStarted) {
               //start audio
               clipStarted = true
-              dispatcher = VoiceConnection.play("./assets/annoying_clip.mp3").on("finish", () => {
-                audioPlaying = false
-                VoiceConnection.disconnect();
-                clearTimeout(durationTimer);
-              });
             }
             else {
               //resume audio
