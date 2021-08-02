@@ -1329,7 +1329,7 @@ bot.on('message', message => {
     else if (!audioPlaying && message.member.voice.channel) {
       let userToAnnoy = args[0]
       let duration = (parseInt(args[1]) <= 60)? parseInt(args[1]) * 1000: 60000; //limit duration to 30 seconds
-      let clipStarted = false
+      // let clipStarted = false
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
         let dispatcher = VoiceConnection.play("./assets/annoying_clip.mp3");
@@ -1346,14 +1346,15 @@ bot.on('message', message => {
             VoiceConnection.disconnect();
           }, duration)
           if (speaking.bitfield === 1 && member.displayName === userToAnnoy) {
-            if (!clipStarted) {
-              //start audio
-              clipStarted = true
-            }
-            else {
-              //resume audio
-              dispatcher.resume();
-            }
+            // if (!clipStarted) {
+            //   //start audio
+            //   clipStarted = true
+            // }
+            // else {
+            //   resume audio
+            //   dispatcher.resume();
+            // }
+            dispatcher.resume();
           }
           else if (speaking.bitfield === 0 && member.displayName === userToAnnoy) {
             //pause audio
