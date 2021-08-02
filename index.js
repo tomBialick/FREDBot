@@ -1345,20 +1345,11 @@ bot.on('message', message => {
           clearTimeout(durationTimer);
         });
         bot.on("guildMemberSpeaking", (member, speaking) => {
-          console.log("Speaker: " + member.displayName + " Speaking: " + ((speaking.bitfield === 1)? "true": "false"))
+          // console.log("Speaker: " + member.displayName + " Speaking: " + ((speaking.bitfield === 1)? "true": "false"))
           if (speaking.bitfield === 1 && member.displayName === userToAnnoy) {
-            // if (!clipStarted) {
-            //   //start audio
-            //   clipStarted = true
-            // }
-            // else {
-            //   resume audio
-            //   dispatcher.resume();
-            // }
             dispatcher.resume();
           }
           else if (speaking.bitfield === 0 && member.displayName === userToAnnoy) {
-            //pause audio
             dispatcher.pause();
           }
         });
