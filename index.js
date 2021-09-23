@@ -978,7 +978,7 @@ bot.on('message', message => {
       });
     })
   }
-  // else if (command === 'gold-graph') {
+  else if (command === 'gold-graph') {
   //   fetch( config.fred_url + 'series/observations?' + "series_id=GOLDAMGBD228NLBM&observation_start=" + args[0] + fredEndStr, {
   //     method: 'GET',
   //     headers: {
@@ -1051,7 +1051,7 @@ bot.on('message', message => {
   //       console.log(generationError);
   //     });
   //   })
-  // }
+  }
   else if (command === 'total-corporate-debt-graph') {
     fetch( config.fred_url + 'series/observations?' + "series_id=BOGZ1FL894104005A&observation_start=" + args[0] + fredEndStr, {
       method: 'GET',
@@ -1308,11 +1308,109 @@ bot.on('message', message => {
       })
     }
   }
-  else if (command === 'thx' || command === '14') {
+  else if (command === 'start-the-game' || command === '14') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/14startthegame.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'thx' || command === '15') {
     if (!audioPlaying && message.member.voice.channel) {
       message.member.voice.channel.join().then(VoiceConnection => {
         audioPlaying = true //TODO do this better
         VoiceConnection.play("./assets/thx.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'bruh' || command === '16') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/bruh.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'bye-bye' || command === '17') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/bye-bye.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'hurhurhur' || command === '18') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/hurhurhur.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'juicy' || command === '19') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/juicy.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'news-flash' || command === '20') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/newsflash.mp3").on("finish", () => {
+          audioPlaying = false
+          VoiceConnection.disconnect()
+        });
+      }).catch(e => {
+        audioPlaying = false
+        console.log(e)
+      })
+    }
+  }
+  else if (command === 'trashman' || command === '21') {
+    if (!audioPlaying && message.member.voice.channel) {
+      message.member.voice.channel.join().then(VoiceConnection => {
+        audioPlaying = true //TODO do this better
+        VoiceConnection.play("./assets/trashman.mp3").on("finish", () => {
           audioPlaying = false
           VoiceConnection.disconnect()
         });
