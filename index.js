@@ -61,7 +61,9 @@ bot.on('message', message => {
     '\n * `!grunt` or `!1`\n * `!win` or `!2`\n * `!loser` or `!3`\n * `!metal-gear` or `!4`' +
     '\n * `!wah` or `!5`\n * `!error` or `!6`\n * `!finish-him` or `!7`\n * `!roger-roger` or `!8`' +
     '\n * `!airhorn` or `!9`\n * `!seinfeld` or `!10`\n * `!boot` or `!11`\n * `!x-files` or `!12`' +
-    '\n * `!money` or `!13`\n * `!thx` or `!14`');
+    '\n * `!money` or `!13`\n * `!start-the-game` or `!14`\n * `!thx` or `!15`\n * `!bruh` or `!16`' +
+    '\n * `!bye-bye` or `!17`\n * `!hurhurhur` or `!18`\n * `!juicy` or `!19`' +
+    '\n * `!news-flash` or `!20`\n * `!trashman` or `!21`');
   }
   else if (command === 'sample-chart') {
     fetch( config.fred_url + 'series/observations?' + "series_id=GNPCA" + fredEndStr, {
