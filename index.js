@@ -1459,4 +1459,41 @@ bot.on('message', message => {
       });
     }
   }
+  else if (command === 'stable-diffusion') {
+    message.channel.send("Hey! This may take a few minutes, so please don't spam me...");
+    const { exec } = require('child_process');
+    const ls = exec('python ~/AI_ML/stable-diffusion/optimizedSD/optimized_txt2img.py --prompt ' + args.join(' ') + ' --outdir ~/FREDBot/outFolder --H 768 --W 768 --n_iter 2 --n_samples 3 --ddim_sample 50', (error, stdout, stderr) => {
+      if (error) {
+        console.log(error);
+        message.channel.send("Sorry, there was an issue making the requested images");
+      }
+      else if (stderr) {
+        console.log(stderr);
+        message.channel.send("Sorry, there was an issue making the requested images");
+      }
+      const outStrArr = stdout.slice(prefix.length).trim().split(' ');
+      const outDir = outStrArr[outStrArr.length - 1];
+      fs.readdir(outDir, (err, files) => {
+        message.channel.send("Hey! Sorry for the delay, here is the images I made...");
+        for (let i = 0; i < files.length; i++) {
+          message.channel.send("Image #" + i + ":", { files: [{attachment: outDir + '/' + file, name: 'image' + i + '.png'}]})
+          .then(() => {
+            fs.unlink('./outFolder/' + file, (err) => {
+              if (err) {
+                throw err
+              }
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        }
+        fs.rmdir(outDir, (err) => {
+          if (err) {
+            throw err
+          }
+        });
+      })
+    })
+  }
 });
