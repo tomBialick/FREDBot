@@ -1,12 +1,10 @@
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const bot = new Client({
   intents: [
-    GatewayIntentBits.DirectMessages,
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
-  partials: [Partials.Channel],
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.MESSAGE_CONTENT,
+  ]
 });
 let authStuff = require('./auth/creds.json');
 const TOKEN = authStuff.token
