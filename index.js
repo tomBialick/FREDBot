@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, Partials } = require('discord.js');
+const { Client, Intents } = require('discord.js');
 const bot = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
