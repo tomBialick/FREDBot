@@ -1481,18 +1481,20 @@ bot.on('message', message => {
       fs.readdir(outDir, (err, files) => {
         message.channel.send("Hey! Sorry for the delay, here is the images I made...");
         for (let i = 0; i < files.length; i++) {
-          message.channel.send("Image #" + i + ":", { files: [{attachment: outDir + '/' + files[i], name: 'image' + i + '.png'}]})
+          message.channel.send("Image #" + (i + 1) + ":", { files: [{attachment: outDir + '/' + files[i], name: 'image' + i + '.png'}]})
           .then(() => {
-            fs.unlink('./outFolder/' + file, (err) => {
+            fs.unlink(outDir + '/' + files[i], (err) => {
               if (err) {
                 throw err
               }
-              fs.rmdir(outDir, (err) => {
-                if (err) {
-                  throw err
-                }
+              if (i === files.length - 1) {
+                fs.rmdir(outDir, (err) => {
+                  if (err) {
+                    throw err
+                  }
+                });
               });
-            });
+              }
           })
           .catch(err => {
             console.log(err);
