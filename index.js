@@ -1468,7 +1468,7 @@ bot.on('message', message => {
   else if (command === 'stable-diffusion') {
     message.channel.send("Hey! This may take a few minutes, so please don't spam me...");
     const { exec } = require('child_process');
-    const ls = exec('python ~/AI_ML/stable-diffusion/optimizedSD/optimized_txt2img.py --prompt ' + args.join(' ') + ' --outdir ~/FREDBot/outFolder --H 768 --W 768 --n_iter 2 --n_samples 3 --ddim_sample 50', (error, stdout, stderr) => {
+    const ls = exec('python ~/AI_ML/stable-diffusion/optimizedSD/optimized_txt2img.py --prompt "' + args.join(' ') + '" --outdir ~/FREDBot/outFolder --H 768 --W 768 --n_iter 2 --n_samples 3 --ddim_sample 50', (error, stdout, stderr) => {
       if (error) {
         console.log(error);
         message.channel.send("Sorry, there was an issue making the requested images");
