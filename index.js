@@ -1477,8 +1477,7 @@ bot.on('message', message => {
         console.log(stderr);
         message.channel.send("Sorry, there was an issue making the requested images");
       }
-      const outStrArr = stdout.slice(prefix.length).trim().split(' ');
-      const outDir = outStrArr[outStrArr.length - 1];
+      const outDir = stdout.trim().split(' ').find(element => element.includes('outFolder')).trim();
       fs.readdir(outDir, (err, files) => {
         message.channel.send("Hey! Sorry for the delay, here is the images I made...");
         for (let i = 0; i < files.length; i++) {
