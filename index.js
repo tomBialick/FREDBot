@@ -1493,8 +1493,8 @@ bot.on('message', message => {
                     throw err
                   }
                 });
-              });
               }
+            });
           })
           .catch(err => {
             console.log(err);
